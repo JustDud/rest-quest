@@ -1,7 +1,8 @@
 import os
-from typing import Optional
+from typing import Optional, Sequence, Tuple
 
 from dotenv import load_dotenv
+from prompts import STAGE_INSTRUCTIONS, SYSTEM_PROMPT
 
 try:
     import google.generativeai as genai
@@ -13,12 +14,12 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "models/gemini-2.0-flash-lite-preview")
 
-
 class GeminiNotConfiguredError(RuntimeError):
     """Raised when the Gemini client cannot be initialized."""
 
 
 def _ensure_model() -> "genai.GenerativeModel":
+    # Lazily configure the shared Gemini model so we only do API setup when a prompt is sent.
     if genai is None:
         raise GeminiNotConfiguredError(
             "The google-generativeai package is required. Install it with `pip install google-generativeai`."
@@ -30,20 +31,32 @@ def _ensure_model() -> "genai.GenerativeModel":
     return genai.GenerativeModel(GEMINI_MODEL)
 
 
-def get_trip_response(user_text: str, *, stress_hint: Optional[str] = None) -> str:
+def get_trip_response(
+    user_text: str,
+    *,
+    stress_hint: Optional[str] = None,
+    history: Optional[Sequence[Tuple[str, str]]] = None,
+    stage_instruction: str = "follow_up_question",
+) -> str:
     """
     Send the user's transcript to Gemini and return a wellness-oriented travel suggestion.
     """
     model = _ensure_model()
 
-    persona = (
-        "You are a friendly mindfulness-focused travel assistant. "
-        "Ask concise follow-up questions when needed, recommend destinations that match the user's emotional state, "
-        "and weave in gentle wellbeing practices."
-    )
-    prompt = f"{persona}\n\nUser intention:\n{user_text.strip()}"
+    # Prompt priming keeps Gemini focused on the mental-wellbeing travel concierge persona.
+    persona = SYSTEM_PROMPT
+    history_block = _history_to_text(history)
+    stage_hint = STAGE_INSTRUCTIONS.get(stage_instruction, STAGE_INSTRUCTIONS["follow_up_question"])
+
+    prompt_sections = [persona]
+    if history_block:
+        prompt_sections.append(f"Conversation so far:\n{history_block}")
+    prompt_sections.append(f"Latest user message:\n{user_text.strip()}")
+    prompt_sections.append(f"Stage instructions:\n{stage_hint}")
     if stress_hint:
-        prompt += f"\n\nStress indicators: {stress_hint.strip()}"
+        prompt_sections.append(f"Stress indicators: {stress_hint.strip()}")
+
+    prompt = "\n\n".join(prompt_sections)
 
     response = model.generate_content(prompt)
     text = _extract_text(response)
@@ -53,6 +66,7 @@ def get_trip_response(user_text: str, *, stress_hint: Optional[str] = None) -> s
 
 
 def _extract_text(response: "genai.types.GenerateContentResponse") -> str:
+    # The SDK can place text on response.text or within candidate/part structures; normalize it here.
     if hasattr(response, "text") and response.text:
         return response.text
 
@@ -68,3 +82,10 @@ def _extract_text(response: "genai.types.GenerateContentResponse") -> str:
                 return candidate.content.text
 
     return ""
+
+
+def _history_to_text(history: Optional[Sequence[Tuple[str, str]]]) -> str:
+    if not history:
+        return ""
+    lines = [f"{role.upper()}: {text.strip()}" for role, text in history if text.strip()]
+    return "\n".join(lines)
