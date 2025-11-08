@@ -1,0 +1,108 @@
+{
+  "happy": [
+    {
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Europe",
+      "vibe": "sunny coastal walks, effortless cafe culture"
+    },
+    {
+      "name": "Hoi An",
+      "country": "Vietnam",
+      "region": "Asia",
+      "vibe": "lantern-lit evenings and culinary adventures"
+    }
+  ],
+  "sad": [
+    {
+      "name": "Sedona",
+      "country": "USA",
+      "region": "North America",
+      "vibe": "restorative desert hikes and mindful retreats"
+    },
+    {
+      "name": "Lake Bled",
+      "country": "Slovenia",
+      "region": "Europe",
+      "vibe": "calming lakeside scenery with gentle rowing trips"
+    }
+  ],
+  "angry": [
+    {
+      "name": "Queenstown",
+      "country": "New Zealand",
+      "region": "Oceania",
+      "vibe": "adrenaline resets via bungee, canyon swings, and alpine air"
+    },
+    {
+      "name": "Patagonia",
+      "country": "Chile",
+      "region": "South America",
+      "vibe": "long treks to channel intensity into raw nature"
+    }
+  ],
+  "surprise": [
+    {
+      "name": "Tokyo",
+      "country": "Japan",
+      "region": "Asia",
+      "vibe": "neon explorations and hidden alley dining"
+    },
+    {
+      "name": "Iceland Ring Road",
+      "country": "Iceland",
+      "region": "Europe",
+      "vibe": "geysers, glaciers, and spontaneous aurora hunts"
+    }
+  ],
+  "fear": [
+    {
+      "name": "Kyoto",
+      "country": "Japan",
+      "region": "Asia",
+      "vibe": "structured tea ceremonies and grounding temples"
+    },
+    {
+      "name": "Banff",
+      "country": "Canada",
+      "region": "North America",
+      "vibe": "guided alpine walks that feel safe yet expansive"
+    }
+  ],
+  "disgust": [
+    {
+      "name": "Copenhagen",
+      "country": "Denmark",
+      "region": "Europe",
+      "vibe": "clean design, calm canals, and palate-cleansing Nordic cuisine"
+    },
+    {
+      "name": "Singapore",
+      "country": "Singapore",
+      "region": "Asia",
+      "vibe": "immaculate cityscapes and hawker-center flavor resets"
+    }
+  ],
+  "neutral": [
+    {
+      "name": "Amsterdam",
+      "country": "Netherlands",
+      "region": "Europe",
+      "vibe": "slow canal biking and museum afternoons"
+    },
+    {
+      "name": "Seoul",
+      "country": "South Korea",
+      "region": "Asia",
+      "vibe": "balanced mix of cafes, art districts, and leafy hikes"
+    }
+  ],
+  "default": [
+    {
+      "name": "Lisbon",
+      "country": "Portugal",
+      "region": "Europe",
+      "vibe": "sunny coastal walks, effortless cafe culture"
+    }
+  ]
+}
