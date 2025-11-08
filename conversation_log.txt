@@ -1,15 +1,12 @@
-2025-11-08T17:42:58.980456+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T17:43:15.905437+00:00 | USER | I feel fine and I want to go hiking.
-2025-11-08T17:43:16.818887+00:00 | ASSISTANT | Okay, great! To make the hiking trip perfect, what kind of scenery, solitude, or social experience are you hoping for?
-2025-11-08T17:43:33.925879+00:00 | USER | Big group of people.
-2025-11-08T17:43:35.353405+00:00 | ASSISTANT | Okay, you're feeling good and looking for a social hiking adventure. For your next trip, how about a mountain getaway with a focus on boosting energy and connection? I recommend a group hike with opportunities for sharing stories and laughter. To enhance the experience, try a mindful walking meditation to ground you and connect you with the environment.
-```json
-{
-  "assistant_reply": "For a social hiking trip, you're seeking energy and connection. I suggest a mountain getaway with group hikes for shared stories and laughter.",
+2025-11-08T19:32:15.717461+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
+2025-11-08T19:32:33.195843+00:00 | USER | I go-- I говорю, я с тобой разговариваю. Слушаю. Так, я не молчу. Спасибо.
+2025-11-08T19:32:34.004762+00:00 | ASSISTANT | It sounds like you're ready for a change! To best advise you, what kind of feeling are you hoping to cultivate during this trip?
+2025-11-08T19:32:47.936322+00:00 | USER | Don't bring it.
+2025-11-08T19:32:49.057515+00:00 | ASSISTANT | {
+  "assistant_reply": "It seems like you need a place to release tension and feel safe. How about a quiet forest retreat, offering space to breathe and reconnect? Try a walking meditation to ground yourself.",
   "recommendation": {
-    "destination_type": "mountain",
-    "wellbeing_focus": "energy / social recharge",
-    "sample_activity": "mindful walking meditation"
+    "destination_type": "forest",
+    "wellbeing_focus": "relaxation",
+    "sample_activity": "walking meditation"
   }
 }
-```

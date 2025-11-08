@@ -1,7 +1,13 @@
-Session recorded at 2025-11-08T16:37:17.250341+00:00
-USER: Zdravo. (pauses of three seconds)
-ASSISTANT: Hello! I sense a need for grounding. To start, how are you feeling right now, and what kind of environment is calling to you most?
-USER: If I feel normal, I want to go to the mountains.
-ASSISTANT: Okay, I'm ready.
-
-How are you feeling today, and what kind of experience are you hoping for?
+Session recorded at 2025-11-08T19:32:49.057969+00:00
+ASSISTANT: Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
+USER: I go-- I говорю, я с тобой разговариваю. Слушаю. Так, я не молчу. Спасибо.
+ASSISTANT: It sounds like you're ready for a change! To best advise you, what kind of feeling are you hoping to cultivate during this trip?
+USER: Don't bring it.
+ASSISTANT: {
+  "assistant_reply": "It seems like you need a place to release tension and feel safe. How about a quiet forest retreat, offering space to breathe and reconnect? Try a walking meditation to ground yourself.",
+  "recommendation": {
+    "destination_type": "forest",
+    "wellbeing_focus": "relaxation",
+    "sample_activity": "walking meditation"
+  }
+}
