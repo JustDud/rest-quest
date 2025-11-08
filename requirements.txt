@@ -1,5 +1,12 @@
-elevenlabs==2.22.0
-google-generativeai==0.8.5
-numpy==2.3.4
-python-dotenv==1.2.1
-sounddevice==0.5.1
+opencv-python>=4.10.0.84
+mediapipe>=0.10.14
+deepface>=0.0.93
+fer>=23.0.0
+numpy>=1.26.4
+sounddevice>=0.5.0
+python-dotenv>=1.0.1
+elevenlabs>=1.7.0
+google-generativeai>=0.7.2
+scipy>=1.11.4
+tensorflow>=2.15.0
+tensorflow-metal>=1.1.0 ; sys_platform == "darwin"
