@@ -1,0 +1,2570 @@
+{
+  "version": "2024-10-mental-wellbeing-alpha",
+  "updated": "2024-10-08",
+  "destinations": [
+    {
+      "id": "calm-coast-retreat",
+      "displayName": "Calm Coast Retreat, San Juan Islands",
+      "region": "Pacific Northwest, USA",
+      "setting": "coastal forest archipelago",
+      "idealFor": [
+        "anxiety spikes",
+        "sensory overload",
+        "digital burnout"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Small-group eco-lodges focused on nervous-system downshifting through slow travel rituals and cold-water resilience dips.",
+      "recommendedSeasons": [
+        "late spring",
+        "early fall"
+      ],
+      "typicalStayNights": [
+        3,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Tidal breathing walks",
+          "whyItHelps": "Harnesses wave cadence to entrain calmer breathing patterns."
+        },
+        {
+          "name": "Whale listening sessions",
+          "whyItHelps": "Low-frequency sounds stimulate vagal tone and grounding."
+        }
+      ],
+      "therapeuticFocus": [
+        "mindful cold immersion",
+        "forest bathing",
+        "guided journaling"
+      ],
+      "clinicianNotes": "Screen for motion sensitivity (ferry ride) and provide grounding snacks pre-boarding.",
+      "accessibilityNotes": "Boardwalks are wheelchair friendly; request all-terrain chair for driftwood beaches.",
+      "travelCompanions": [
+        "solo",
+        "pair"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?san-juan-islands,calm,coast",
+          "alt": "Calm coastal forest overlooking the San Juan Islands",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "anxiety-spikes",
+          "sensory-overload",
+          "digital-burnout"
+        ],
+        "modalityTags": [
+          "mindful-cold-immersion",
+          "forest-bathing",
+          "guided-journaling"
+        ],
+        "seasonTags": [
+          "late-spring",
+          "early-fall"
+        ],
+        "groupTags": [
+          "solo",
+          "pair"
+        ],
+        "settingTag": "coastal-forest-archipelago",
+        "regionTag": "pacific-northwest-usa",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Screen for motion sensitivity (ferry ride) and provide grounding snacks pre-boarding.",
+        "accessSupportSummary": "Boardwalks are wheelchair friendly; request all-terrain chair for driftwood beaches."
+      }
+    },
+    {
+      "id": "desert-sunrise-reset",
+      "displayName": "Desert Sunrise Reset, Joshua Tree",
+      "region": "California High Desert, USA",
+      "setting": "warm desert mesas",
+      "idealFor": [
+        "rumination loops",
+        "grief processing"
+      ],
+      "energyLevel": "medium",
+      "costTier": "medium",
+      "summary": "Sound baths and gentle hikes designed to interrupt looping thoughts with awe-inducing geology.",
+      "recommendedSeasons": [
+        "winter",
+        "early spring"
+      ],
+      "typicalStayNights": [
+        4,
+        6
+      ],
+      "signatureActivities": [
+        {
+          "name": "Dawn sound bath",
+          "whyItHelps": "Vibrational therapy paired with sunrise cortisol spike for smoother mood curves."
+        },
+        {
+          "name": "Star trail journaling",
+          "whyItHelps": "Night sky focus widens cognitive frame, useful for grief contexts."
+        }
+      ],
+      "therapeuticFocus": [
+        "awe therapy",
+        "somatic grounding",
+        "gentle mobility"
+      ],
+      "clinicianNotes": "Monitor dehydration risk; remind visitors about drastic day-night temperature swings.",
+      "accessibilityNotes": "Flat trails available; extreme heat contraindicates for some meds.",
+      "travelCompanions": [
+        "solo",
+        "support group"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?joshua-tree,desert,sunrise",
+          "alt": "Golden sunrise over Joshua Tree desert landscape",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "rumination-loops",
+          "grief-processing"
+        ],
+        "modalityTags": [
+          "awe-therapy",
+          "somatic-grounding",
+          "gentle-mobility"
+        ],
+        "seasonTags": [
+          "winter",
+          "early-spring"
+        ],
+        "groupTags": [
+          "solo",
+          "support-group"
+        ],
+        "settingTag": "warm-desert-mesas",
+        "regionTag": "california-high-desert-usa",
+        "climateTag": "climate-arid-hot",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Monitor dehydration risk; remind visitors about drastic day-night temperature swings.",
+        "accessSupportSummary": "Flat trails available; extreme heat contraindicates for some meds."
+      }
+    },
+    {
+      "id": "alpine-stability-program",
+      "displayName": "Alpine Stability Program, Lake Lucerne",
+      "region": "Central Switzerland",
+      "setting": "alpine lakeside",
+      "idealFor": [
+        "panic recovery",
+        "work burnout"
+      ],
+      "energyLevel": "low",
+      "costTier": "high",
+      "summary": "Structured rest itinerary with hydrotherapy circuits and clinical coaching between sessions.",
+      "recommendedSeasons": [
+        "summer",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        5,
+        7
+      ],
+      "signatureActivities": [
+        {
+          "name": "Contrast hydro circuit",
+          "whyItHelps": "Thermal shifts train autonomic flexibility and reduce panic aftershocks."
+        },
+        {
+          "name": "Cable car exposure",
+          "whyItHelps": "Supported micro-dosing of height exposure for fear extinction."
+        }
+      ],
+      "therapeuticFocus": [
+        "hydrotherapy",
+        "CBT-informed coaching",
+        "structured rest"
+      ],
+      "clinicianNotes": "Ideal for clients already cleared for air travel and moderate altitude.",
+      "accessibilityNotes": "Most facilities ADA-compliant; cable cars offer seated cabins.",
+      "travelCompanions": [
+        "pair",
+        "clinician-led"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?lake-lucerne,alps,spa",
+          "alt": "Tranquil Lake Lucerne surrounded by Swiss Alps",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "panic-recovery",
+          "work-burnout"
+        ],
+        "modalityTags": [
+          "hydrotherapy",
+          "cbt-informed-coaching",
+          "structured-rest"
+        ],
+        "seasonTags": [
+          "summer",
+          "autumn"
+        ],
+        "groupTags": [
+          "pair",
+          "clinician-led"
+        ],
+        "settingTag": "alpine-lakeside",
+        "regionTag": "central-switzerland",
+        "climateTag": "climate-cool-mountain",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Ideal for clients already cleared for air travel and moderate altitude.",
+        "accessSupportSummary": "Most facilities ADA-compliant; cable cars offer seated cabins."
+      }
+    },
+    {
+      "id": "rainforest-sensory-spa",
+      "displayName": "Rainforest Sensory Spa, Ubud",
+      "region": "Bali, Indonesia",
+      "setting": "tropical rainforest",
+      "idealFor": [
+        "creative block",
+        "mild depressive episodes"
+      ],
+      "energyLevel": "medium",
+      "costTier": "medium",
+      "summary": "Immersive art and scent labs woven with gentle yoga for clients needing safe stimulation.",
+      "recommendedSeasons": [
+        "dry season"
+      ],
+      "typicalStayNights": [
+        6,
+        9
+      ],
+      "signatureActivities": [
+        {
+          "name": "Scent mapping workshop",
+          "whyItHelps": "Novel olfactory cues can re-engage reward circuitry."
+        },
+        {
+          "name": "Rice terrace color walks",
+          "whyItHelps": "Greenscape gradients support parasympathetic dominance."
+        }
+      ],
+      "therapeuticFocus": [
+        "expressive arts",
+        "gentle movement",
+        "sensory reawakening"
+      ],
+      "clinicianNotes": "Check for overstimulation risk and adjust schedule with rest pods.",
+      "accessibilityNotes": "Many stairs; recommend mobility consult beforehand.",
+      "travelCompanions": [
+        "friends",
+        "solo"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?ubud,rainforest,retreat",
+          "alt": "Lush Ubud rainforest spa setting",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "creative-block",
+          "mild-depressive-episodes"
+        ],
+        "modalityTags": [
+          "expressive-arts",
+          "gentle-movement",
+          "sensory-reawakening"
+        ],
+        "seasonTags": [
+          "dry-season"
+        ],
+        "groupTags": [
+          "friends",
+          "solo"
+        ],
+        "settingTag": "tropical-rainforest",
+        "regionTag": "bali-indonesia",
+        "climateTag": "climate-tropical-humid",
+        "stayBucket": "extended",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Check for overstimulation risk and adjust schedule with rest pods.",
+        "accessSupportSummary": "Many stairs; recommend mobility consult beforehand."
+      }
+    },
+    {
+      "id": "nordic-night-restoration",
+      "displayName": "Nordic Night Restoration, Lofoten",
+      "region": "Arctic Norway",
+      "setting": "fjords and midnight sun",
+      "idealFor": [
+        "circadian dysregulation",
+        "shift-work fatigue"
+      ],
+      "energyLevel": "medium",
+      "costTier": "high",
+      "summary": "Chronobiology-informed stays using light dosing, sauna rituals, and structured sleep coaching.",
+      "recommendedSeasons": [
+        "summer",
+        "winter aurora"
+      ],
+      "typicalStayNights": [
+        7,
+        10
+      ],
+      "signatureActivities": [
+        {
+          "name": "Blue-light kayak mornings",
+          "whyItHelps": "Gentle cardio plus timed light exposure anchors circadian cues."
+        },
+        {
+          "name": "Aurora sleep rehearsal",
+          "whyItHelps": "Guided visualization combined with breathing ladders for insomnia."
+        }
+      ],
+      "therapeuticFocus": [
+        "light therapy",
+        "sauna contrast",
+        "sleep coaching"
+      ],
+      "clinicianNotes": "Great for clients with flexible schedules able to adjust to jet lag progression.",
+      "accessibilityNotes": "Limited winter road access; emergency evacuation plans pre-briefed.",
+      "travelCompanions": [
+        "solo",
+        "partner"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?lofoten,aurora,sauna",
+          "alt": "Northern lights over Lofoten fjords",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "circadian-dysregulation",
+          "shift-work-fatigue"
+        ],
+        "modalityTags": [
+          "light-therapy",
+          "sauna-contrast",
+          "sleep-coaching"
+        ],
+        "seasonTags": [
+          "summer",
+          "winter-aurora"
+        ],
+        "groupTags": [
+          "solo",
+          "partner"
+        ],
+        "settingTag": "fjords-and-midnight-sun",
+        "regionTag": "arctic-norway",
+        "climateTag": "climate-cold-polar",
+        "stayBucket": "extended",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Great for clients with flexible schedules able to adjust to jet lag progression.",
+        "accessSupportSummary": "Limited winter road access; emergency evacuation plans pre-briefed."
+      }
+    },
+    {
+      "id": "urban-green-reset",
+      "displayName": "Urban Green Reset, Singapore",
+      "region": "Southeast Asia",
+      "setting": "biophilic city",
+      "idealFor": [
+        "high-performance anxiety",
+        "ADHD focus dips"
+      ],
+      "energyLevel": "high",
+      "costTier": "medium",
+      "summary": "Micro-retreat built for busy founders needing structured focus sprints plus nature micro-doses.",
+      "recommendedSeasons": [
+        "year-round"
+      ],
+      "typicalStayNights": [
+        2,
+        4
+      ],
+      "signatureActivities": [
+        {
+          "name": "Sky garden task batching",
+          "whyItHelps": "Alternating green vistas with deep work improves task completion."
+        },
+        {
+          "name": "Night hawker social exposure",
+          "whyItHelps": "Low-stakes social practice combats avoidance and isolation."
+        }
+      ],
+      "therapeuticFocus": [
+        "body doubling",
+        "biofeedback",
+        "executive function coaching"
+      ],
+      "clinicianNotes": "Ideal when a full sabbatical is unrealistic; pair with tele-therapy follow-ups.",
+      "accessibilityNotes": "City infrastructure supports mobility aids; humidity caution for POTS clients.",
+      "travelCompanions": [
+        "solo",
+        "team offsite"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?singapore,sky-garden,city",
+          "alt": "Singapore skyline with lush sky gardens",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "high-performance-anxiety",
+          "adhd-focus-dips"
+        ],
+        "modalityTags": [
+          "body-doubling",
+          "biofeedback",
+          "executive-function-coaching"
+        ],
+        "seasonTags": [
+          "year-round"
+        ],
+        "groupTags": [
+          "solo",
+          "team-offsite"
+        ],
+        "settingTag": "biophilic-city",
+        "regionTag": "southeast-asia",
+        "climateTag": "climate-urban-microclimate",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.85,
+          "activation": "stimulating"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Ideal when a full sabbatical is unrealistic; pair with tele-therapy follow-ups.",
+        "accessSupportSummary": "City infrastructure supports mobility aids; humidity caution for POTS clients."
+      }
+    },
+    {
+      "id": "island-grief-circle",
+      "displayName": "Island Grief Circle, Isle of Skye",
+      "region": "Scotland",
+      "setting": "misty coastal cliffs",
+      "idealFor": [
+        "fresh grief",
+        "family reconciliation"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Community-led rituals, keening circles, and gentle hikes for collective mourning.",
+      "recommendedSeasons": [
+        "late spring",
+        "summer"
+      ],
+      "typicalStayNights": [
+        4,
+        6
+      ],
+      "signatureActivities": [
+        {
+          "name": "Stone stacking memorial",
+          "whyItHelps": "Externalizes grief through tactile ritual."
+        },
+        {
+          "name": "Fog walk storytelling",
+          "whyItHelps": "Shared narratives reduce isolation and normalize waves of sadness."
+        }
+      ],
+      "therapeuticFocus": [
+        "communal grieving",
+        "narrative therapy",
+        "nature holding"
+      ],
+      "clinicianNotes": "Screen for severe depressive episodes needing higher acuity setting.",
+      "accessibilityNotes": "Uneven terrain; transport van supports limited mobility.",
+      "travelCompanions": [
+        "family",
+        "peer group"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?isle-of-skye,cliffs,mist",
+          "alt": "Misty cliffs along the Isle of Skye coastline",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "fresh-grief",
+          "family-reconciliation"
+        ],
+        "modalityTags": [
+          "communal-grieving",
+          "narrative-therapy",
+          "nature-holding"
+        ],
+        "seasonTags": [
+          "late-spring",
+          "summer"
+        ],
+        "groupTags": [
+          "family",
+          "peer-group"
+        ],
+        "settingTag": "misty-coastal-cliffs",
+        "regionTag": "scotland",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Screen for severe depressive episodes needing higher acuity setting.",
+        "accessSupportSummary": "Uneven terrain; transport van supports limited mobility."
+      }
+    },
+    {
+      "id": "forest-adhd-camp",
+      "displayName": "Forest ADHD Camp, Blue Ridge",
+      "region": "Appalachia, USA",
+      "setting": "temperate forest",
+      "idealFor": [
+        "adult ADHD",
+        "motivation droughts"
+      ],
+      "energyLevel": "medium",
+      "costTier": "low",
+      "summary": "Gamified accountability pods, trail runs, and analog planning labs.",
+      "recommendedSeasons": [
+        "spring",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        3,
+        4
+      ],
+      "signatureActivities": [
+        {
+          "name": "Trail sprint scrums",
+          "whyItHelps": "Interval movement resets dopamine and primes focus."
+        },
+        {
+          "name": "Analog planner lab",
+          "whyItHelps": "Hands-on planning bypasses digital distractions."
+        }
+      ],
+      "therapeuticFocus": [
+        "accountability pods",
+        "movement snacks",
+        "executive tools"
+      ],
+      "clinicianNotes": "Encourage med holiday consult before altering stimulant schedule.",
+      "accessibilityNotes": "Cabins have sensory-safe lighting; ear defenders provided.",
+      "travelCompanions": [
+        "friends",
+        "solo"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?blue-ridge,forest,camp",
+          "alt": "Sunlit Blue Ridge forest trail camp",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "adult-adhd",
+          "motivation-droughts"
+        ],
+        "modalityTags": [
+          "accountability-pods",
+          "movement-snacks",
+          "executive-tools"
+        ],
+        "seasonTags": [
+          "spring",
+          "autumn"
+        ],
+        "groupTags": [
+          "friends",
+          "solo"
+        ],
+        "settingTag": "temperate-forest",
+        "regionTag": "appalachia-usa",
+        "climateTag": "climate-temperate-forest",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 1,
+          "bucket": "budget"
+        },
+        "contraindicationSummary": "Encourage med holiday consult before altering stimulant schedule.",
+        "accessSupportSummary": "Cabins have sensory-safe lighting; ear defenders provided."
+      }
+    },
+    {
+      "id": "thermal-release-sanctuary",
+      "displayName": "Thermal Release Sanctuary, Rotorua",
+      "region": "North Island, New Zealand",
+      "setting": "geothermal valley",
+      "idealFor": [
+        "chronic muscle tension",
+        "somatic PTSD symptoms"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Clinical bodywork paired with mud pools and gentle neurosomatic education.",
+      "recommendedSeasons": [
+        "year-round"
+      ],
+      "typicalStayNights": [
+        5,
+        7
+      ],
+      "signatureActivities": [
+        {
+          "name": "Guided mud immersion",
+          "whyItHelps": "Deep heat softens guarding patterns before therapy."
+        },
+        {
+          "name": "Earth pulse meditation",
+          "whyItHelps": "Volcanic rumble provides safe sensory anchor for trauma release."
+        }
+      ],
+      "therapeuticFocus": [
+        "somatic therapy",
+        "hydrotherapy",
+        "breath re-patterning"
+      ],
+      "clinicianNotes": "Contraindicated for uncontrolled hypertension; obtain medical clearance.",
+      "accessibilityNotes": "On-site clinicians trained in trauma-informed touch boundaries.",
+      "travelCompanions": [
+        "solo",
+        "care partner"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?rotorua,hot-springs,steam",
+          "alt": "Steaming geothermal pools in Rotorua",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "chronic-muscle-tension",
+          "somatic-ptsd-symptoms"
+        ],
+        "modalityTags": [
+          "somatic-therapy",
+          "hydrotherapy",
+          "breath-re-patterning"
+        ],
+        "seasonTags": [
+          "year-round"
+        ],
+        "groupTags": [
+          "solo",
+          "care-partner"
+        ],
+        "settingTag": "geothermal-valley",
+        "regionTag": "north-island-new-zealand",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Contraindicated for uncontrolled hypertension; obtain medical clearance.",
+        "accessSupportSummary": "On-site clinicians trained in trauma-informed touch boundaries."
+      }
+    },
+    {
+      "id": "creative-sea-sabbatical",
+      "displayName": "Creative Sea Sabbatical, Porto",
+      "region": "Portugal",
+      "setting": "Atlantic coastal city",
+      "idealFor": [
+        "mild depression",
+        "creative fatigue"
+      ],
+      "energyLevel": "medium",
+      "costTier": "low",
+      "summary": "Artist residencies with optional therapy check-ins and communal dinners.",
+      "recommendedSeasons": [
+        "spring",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        14,
+        21
+      ],
+      "signatureActivities": [
+        {
+          "name": "Sea-blues palette lab",
+          "whyItHelps": "Color work stimulates reward pathways gently."
+        },
+        {
+          "name": "Fado emotion mapping",
+          "whyItHelps": "Guided listening helps name and release blended emotions."
+        }
+      ],
+      "therapeuticFocus": [
+        "art therapy",
+        "behavioral activation",
+        "social nourishment"
+      ],
+      "clinicianNotes": "Longer stays pair well with tele-therapy continuity.",
+      "accessibilityNotes": "Historic buildings mean some stair-only access; request ground-floor studio early.",
+      "travelCompanions": [
+        "solo",
+        "artist cohort"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?porto,atlantic,artist",
+          "alt": "Colorful Porto waterfront by the Atlantic",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "mild-depression",
+          "creative-fatigue"
+        ],
+        "modalityTags": [
+          "art-therapy",
+          "behavioral-activation",
+          "social-nourishment"
+        ],
+        "seasonTags": [
+          "spring",
+          "autumn"
+        ],
+        "groupTags": [
+          "solo",
+          "artist-cohort"
+        ],
+        "settingTag": "atlantic-coastal-city",
+        "regionTag": "portugal",
+        "climateTag": "climate-urban-microclimate",
+        "stayBucket": "extended",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 1,
+          "bucket": "budget"
+        },
+        "contraindicationSummary": "Longer stays pair well with tele-therapy continuity.",
+        "accessSupportSummary": "Historic buildings mean some stair-only access; request ground-floor studio early."
+      }
+    },
+    {
+      "id": "mountain-family-resync",
+      "displayName": "Mountain Family Resync, Banff",
+      "region": "Alberta, Canada",
+      "setting": "Rocky Mountain valley",
+      "idealFor": [
+        "family conflict",
+        "teen anxiety"
+      ],
+      "energyLevel": "medium",
+      "costTier": "medium",
+      "summary": "Guided family systems work woven with low-risk adventure to rebuild trust.",
+      "recommendedSeasons": [
+        "summer",
+        "winter"
+      ],
+      "typicalStayNights": [
+        5,
+        7
+      ],
+      "signatureActivities": [
+        {
+          "name": "Family belay sessions",
+          "whyItHelps": "Shared risk activities reinforce communication contracts."
+        },
+        {
+          "name": "Glacial reflection paddle",
+          "whyItHelps": "Mirror-like lakes set tone for calm dialogue."
+        }
+      ],
+      "therapeuticFocus": [
+        "family systems coaching",
+        "adventure therapy",
+        "communication labs"
+      ],
+      "clinicianNotes": "Great for families already in counseling who need an intensive reset.",
+      "accessibilityNotes": "Adaptive gear for neurodivergent teens available.",
+      "travelCompanions": [
+        "family"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?banff,rocky-mountains,family",
+          "alt": "Family enjoying Banff mountain lake vista",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "family-conflict",
+          "teen-anxiety"
+        ],
+        "modalityTags": [
+          "family-systems-coaching",
+          "adventure-therapy",
+          "communication-labs"
+        ],
+        "seasonTags": [
+          "summer",
+          "winter"
+        ],
+        "groupTags": [
+          "family"
+        ],
+        "settingTag": "rocky-mountain-valley",
+        "regionTag": "alberta-canada",
+        "climateTag": "climate-cool-mountain",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Great for families already in counseling who need an intensive reset.",
+        "accessSupportSummary": "Adaptive gear for neurodivergent teens available."
+      }
+    },
+    {
+      "id": "zen-city-hideout",
+      "displayName": "Zen City Hideout, Kyoto",
+      "region": "Japan",
+      "setting": "historic urban calm",
+      "idealFor": [
+        "decision fatigue",
+        "data overwhelm"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Tatami-based retreat blending tea ceremony etiquette with digital silence labs.",
+      "recommendedSeasons": [
+        "spring",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        4,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Tea cadence training",
+          "whyItHelps": "Repetitive micro-actions calm analytical overdrive."
+        },
+        {
+          "name": "Temple analog archive",
+          "whyItHelps": "Hands-on calligraphy narrows attention and reduces screen cravings."
+        }
+      ],
+      "therapeuticFocus": [
+        "digital detox",
+        "ritual design",
+        "slow decision practice"
+      ],
+      "clinicianNotes": "Prep clients for strict device boundaries; coordinate safety check-ins.",
+      "accessibilityNotes": "Traditional seating may strain knees; chairs available on request.",
+      "travelCompanions": [
+        "solo",
+        "mentor"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?kyoto,tea-house,zen",
+          "alt": "Quiet Kyoto tea house interior",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "decision-fatigue",
+          "data-overwhelm"
+        ],
+        "modalityTags": [
+          "digital-detox",
+          "ritual-design",
+          "slow-decision-practice"
+        ],
+        "seasonTags": [
+          "spring",
+          "autumn"
+        ],
+        "groupTags": [
+          "solo",
+          "mentor"
+        ],
+        "settingTag": "historic-urban-calm",
+        "regionTag": "japan",
+        "climateTag": "climate-urban-microclimate",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Prep clients for strict device boundaries; coordinate safety check-ins.",
+        "accessSupportSummary": "Traditional seating may strain knees; chairs available on request."
+      }
+    },
+    {
+      "id": "coastal-grounding-caravan",
+      "displayName": "Coastal Grounding Caravan, Oaxaca",
+      "region": "Mexico",
+      "setting": "quiet surf town",
+      "idealFor": [
+        "complex trauma",
+        "sensory seeking"
+      ],
+      "energyLevel": "low",
+      "costTier": "low",
+      "summary": "Mobile vanlife-style program that relocates along coastlines to follow calmer swells.",
+      "recommendedSeasons": [
+        "winter",
+        "spring"
+      ],
+      "typicalStayNights": [
+        7,
+        14
+      ],
+      "signatureActivities": [
+        {
+          "name": "Weighted hammock naps",
+          "whyItHelps": "Deep pressure plus ocean sway downshifts hyperarousal."
+        },
+        {
+          "name": "Somatic surf lessons",
+          "whyItHelps": "Water holds offer safe exposure to controlled stress."
+        }
+      ],
+      "therapeuticFocus": [
+        "polyvagal toning",
+        "safe touch consent labs",
+        "slow travel"
+      ],
+      "clinicianNotes": "Trauma-trained facilitators ride along; confirm crisis plan before booking.",
+      "accessibilityNotes": "Vans have limited wheelchair access; beach mats provided.",
+      "travelCompanions": [
+        "small cohort"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?oaxaca,vanlife,surf",
+          "alt": "Converted van parked near calm Oaxaca surf",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "complex-trauma",
+          "sensory-seeking"
+        ],
+        "modalityTags": [
+          "polyvagal-toning",
+          "safe-touch-consent-labs",
+          "slow-travel"
+        ],
+        "seasonTags": [
+          "winter",
+          "spring"
+        ],
+        "groupTags": [
+          "small-cohort"
+        ],
+        "settingTag": "quiet-surf-town",
+        "regionTag": "mexico",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "extended",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 1,
+          "bucket": "budget"
+        },
+        "contraindicationSummary": "Trauma-trained facilitators ride along; confirm crisis plan before booking.",
+        "accessSupportSummary": "Vans have limited wheelchair access; beach mats provided."
+      }
+    },
+    {
+      "id": "savanna-stargaze-retreat",
+      "displayName": "Savanna Stargaze Retreat, NamibRand",
+      "region": "Namib Desert, Namibia",
+      "setting": "open savanna dunes",
+      "idealFor": [
+        "insomnia",
+        "existential anxiety"
+      ],
+      "energyLevel": "low",
+      "costTier": "high",
+      "summary": "Night-focused rest camp with astronomer-guided sessions and breathable canvas suites for clients needing circadian resets.",
+      "recommendedSeasons": [
+        "dry season"
+      ],
+      "typicalStayNights": [
+        4,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Milky Way breath pacing",
+          "whyItHelps": "Pairing breathing ladders with slow constellation sweeps anchors calm focus."
+        },
+        {
+          "name": "Dune barefoot grounding",
+          "whyItHelps": "Warm sand textures reduce hypervigilance and reconnect clients to body cues."
+        }
+      ],
+      "therapeuticFocus": [
+        "circadian care",
+        "awe therapy",
+        "nervous-system grounding"
+      ],
+      "clinicianNotes": "Advise eye protection for intense sun and screen for heat-sensitive meds.",
+      "accessibilityNotes": "Boardwalk access between suites; dune outings require moderate mobility.",
+      "travelCompanions": [
+        "solo",
+        "partner"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?namibia,desert,stars",
+          "alt": "Starry sky over Namib Desert dunes",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "insomnia",
+          "existential-anxiety"
+        ],
+        "modalityTags": [
+          "circadian-care",
+          "awe-therapy",
+          "nervous-system-grounding"
+        ],
+        "seasonTags": [
+          "dry-season"
+        ],
+        "groupTags": [
+          "solo",
+          "partner"
+        ],
+        "settingTag": "open-savanna-dunes",
+        "regionTag": "namib-desert-namibia",
+        "climateTag": "climate-arid-hot",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Advise eye protection for intense sun and screen for heat-sensitive meds.",
+        "accessSupportSummary": "Boardwalk access between suites; dune outings require moderate mobility."
+      }
+    },
+    {
+      "id": "andes-ritual-recalibration",
+      "displayName": "Andes Ritual Recalibration, Sacred Valley",
+      "region": "Cusco Region, Peru",
+      "setting": "high-altitude valley",
+      "idealFor": [
+        "career transitions",
+        "imposter syndrome"
+      ],
+      "energyLevel": "medium",
+      "costTier": "medium",
+      "summary": "Quechua-led ceremonies blended with executive coaching to help guests reframe identity shifts.",
+      "recommendedSeasons": [
+        "dry season",
+        "shoulder months"
+      ],
+      "typicalStayNights": [
+        6,
+        8
+      ],
+      "signatureActivities": [
+        {
+          "name": "Apus gratitude trek",
+          "whyItHelps": "Gentle elevation hikes pair gratitude prompts with expansive views for cognitive reframing."
+        },
+        {
+          "name": "Despacho redesign",
+          "whyItHelps": "Hands-on ritual externalizes internal change agendas."
+        }
+      ],
+      "therapeuticFocus": [
+        "ritual design",
+        "narrative reframing",
+        "somatic grounding"
+      ],
+      "clinicianNotes": "Screen for altitude sensitivity; oxygen lounge available on arrival.",
+      "accessibilityNotes": "Terraced grounds have ramps; arrange porter support if needed.",
+      "travelCompanions": [
+        "solo",
+        "mentor"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?sacred-valley,andes,retreat",
+          "alt": "Sacred Valley terraces under the Andes",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "career-transitions",
+          "imposter-syndrome"
+        ],
+        "modalityTags": [
+          "ritual-design",
+          "narrative-reframing",
+          "somatic-grounding"
+        ],
+        "seasonTags": [
+          "dry-season",
+          "shoulder-months"
+        ],
+        "groupTags": [
+          "solo",
+          "mentor"
+        ],
+        "settingTag": "high-altitude-valley",
+        "regionTag": "cusco-region-peru",
+        "climateTag": "climate-temperate-mixed",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Screen for altitude sensitivity; oxygen lounge available on arrival.",
+        "accessSupportSummary": "Terraced grounds have ramps; arrange porter support if needed."
+      }
+    },
+    {
+      "id": "baltic-float-sanctuary",
+      "displayName": "Baltic Float Sanctuary, Tallinn Archipelago",
+      "region": "Estonia",
+      "setting": "baltic seaside forest",
+      "idealFor": [
+        "sensory processing disorder",
+        "autonomic dysregulation"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Salt-float suites and lichen forests offer quiet sensory input for clients needing buffer time from cities.",
+      "recommendedSeasons": [
+        "summer",
+        "early autumn"
+      ],
+      "typicalStayNights": [
+        3,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Guided float journaling",
+          "whyItHelps": "Post-float reflection cements nervous system learnings."
+        },
+        {
+          "name": "Bog boardwalk meanders",
+          "whyItHelps": "Repeating textures help regulate sensory input."
+        }
+      ],
+      "therapeuticFocus": [
+        "sensory modulation",
+        "breath pacing",
+        "tranquil movement"
+      ],
+      "clinicianNotes": "Float tanks sanitized between uses; contraindicated for active ear infections.",
+      "accessibilityNotes": "Transfer lifts available for float pods; seaside saunas have ramps.",
+      "travelCompanions": [
+        "solo",
+        "care partner"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?baltic,sauna,forest",
+          "alt": "Modern sauna overlooking Baltic forest shoreline",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "sensory-processing-disorder",
+          "autonomic-dysregulation"
+        ],
+        "modalityTags": [
+          "sensory-modulation",
+          "breath-pacing",
+          "tranquil-movement"
+        ],
+        "seasonTags": [
+          "summer",
+          "early-autumn"
+        ],
+        "groupTags": [
+          "solo",
+          "care-partner"
+        ],
+        "settingTag": "baltic-seaside-forest",
+        "regionTag": "estonia",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Float tanks sanitized between uses; contraindicated for active ear infections.",
+        "accessSupportSummary": "Transfer lifts available for float pods; seaside saunas have ramps."
+      }
+    },
+    {
+      "id": "karst-resonance-retreat",
+      "displayName": "Karst Resonance Retreat, Postojna",
+      "region": "Slovenia",
+      "setting": "limestone cave network",
+      "idealFor": [
+        "tinnitus anxiety",
+        "public speaking recovery"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Sound therapists use gentle resonance chambers to recalibrate clients sensitive to noise stress.",
+      "recommendedSeasons": [
+        "spring",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        4,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Subterranean hum circles",
+          "whyItHelps": "Cave acoustics teach vocal control without harsh feedback."
+        },
+        {
+          "name": "Karst drip meditation",
+          "whyItHelps": "Steady drip rhythms entrain slower brain waves."
+        }
+      ],
+      "therapeuticFocus": [
+        "sound therapy",
+        "exposure titration",
+        "breathwork"
+      ],
+      "clinicianNotes": "Ensure claustrophobia screening; exit routes briefed on arrival.",
+      "accessibilityNotes": "Cave pathways have handrails; elevator access available.",
+      "travelCompanions": [
+        "solo",
+        "voice coach"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?slovenia,cave,light",
+          "alt": "Illuminated limestone cave chamber",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "tinnitus-anxiety",
+          "public-speaking-recovery"
+        ],
+        "modalityTags": [
+          "sound-therapy",
+          "exposure-titration",
+          "breathwork"
+        ],
+        "seasonTags": [
+          "spring",
+          "autumn"
+        ],
+        "groupTags": [
+          "solo",
+          "voice-coach"
+        ],
+        "settingTag": "limestone-cave-network",
+        "regionTag": "slovenia",
+        "climateTag": "climate-temperate-mixed",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Ensure claustrophobia screening; exit routes briefed on arrival.",
+        "accessSupportSummary": "Cave pathways have handrails; elevator access available."
+      }
+    },
+    {
+      "id": "mekong-slow-current",
+      "displayName": "Mekong Slow Current Journey",
+      "region": "Mekong Delta, Vietnam",
+      "setting": "river barge",
+      "idealFor": [
+        "racing thoughts",
+        "caregiver fatigue"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Floating boutique barge with nap decks encourages guests to sync with river pace and relinquish hyper-productivity.",
+      "recommendedSeasons": [
+        "cool dry season"
+      ],
+      "typicalStayNights": [
+        5,
+        8
+      ],
+      "signatureActivities": [
+        {
+          "name": "River pulse observation",
+          "whyItHelps": "Watching tides trains patience and down-regulates urgency loops."
+        },
+        {
+          "name": "Floating kitchen circles",
+          "whyItHelps": "Shared cooking builds mutual care for burned-out caregivers."
+        }
+      ],
+      "therapeuticFocus": [
+        "restorative pacing",
+        "communal care",
+        "gentle stretching"
+      ],
+      "clinicianNotes": "Motion sickness kits onboard; internet intentionally throttled.",
+      "accessibilityNotes": "Gangways stabilized; wheelchair-friendly cabin available.",
+      "travelCompanions": [
+        "solo",
+        "friend"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?mekong,riverboat,sunset",
+          "alt": "Slow riverboat gliding along the Mekong at sunset",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "racing-thoughts",
+          "caregiver-fatigue"
+        ],
+        "modalityTags": [
+          "restorative-pacing",
+          "communal-care",
+          "gentle-stretching"
+        ],
+        "seasonTags": [
+          "cool-dry-season"
+        ],
+        "groupTags": [
+          "solo",
+          "friend"
+        ],
+        "settingTag": "river-barge",
+        "regionTag": "mekong-delta-vietnam",
+        "climateTag": "climate-temperate-mixed",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Motion sickness kits onboard; internet intentionally throttled.",
+        "accessSupportSummary": "Gangways stabilized; wheelchair-friendly cabin available."
+      }
+    },
+    {
+      "id": "olive-grove-stillness",
+      "displayName": "Olive Grove Stillness, Puglia",
+      "region": "Salento, Italy",
+      "setting": "ancient olive farms",
+      "idealFor": [
+        "decision paralysis",
+        "gentle detox"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Slow-food farm stays pairing hands-on harvesting with mindful tasting to rebuild self-trust.",
+      "recommendedSeasons": [
+        "late spring",
+        "harvest season"
+      ],
+      "typicalStayNights": [
+        5,
+        7
+      ],
+      "signatureActivities": [
+        {
+          "name": "Olive sorting meditations",
+          "whyItHelps": "Repetitive tactile sorting soothes scattered thinking."
+        },
+        {
+          "name": "Sunset bike drifts",
+          "whyItHelps": "Unstructured rides encourage gentle autonomy."
+        }
+      ],
+      "therapeuticFocus": [
+        "mindful eating",
+        "sensorimotor rhythm",
+        "digital sabbatical"
+      ],
+      "clinicianNotes": "Mediterranean diet friendly; coordinate with dietitians for restrictions.",
+      "accessibilityNotes": "Flat groves allow easy wheelchair navigation; adaptive bikes available.",
+      "travelCompanions": [
+        "pair",
+        "friends"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?puglia,olive-grove,sunset",
+          "alt": "Sunset over ancient olive groves in Puglia",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "decision-paralysis",
+          "gentle-detox"
+        ],
+        "modalityTags": [
+          "mindful-eating",
+          "sensorimotor-rhythm",
+          "digital-sabbatical"
+        ],
+        "seasonTags": [
+          "late-spring",
+          "harvest-season"
+        ],
+        "groupTags": [
+          "pair",
+          "friends"
+        ],
+        "settingTag": "ancient-olive-farms",
+        "regionTag": "salento-italy",
+        "climateTag": "climate-temperate-mixed",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Mediterranean diet friendly; coordinate with dietitians for restrictions.",
+        "accessSupportSummary": "Flat groves allow easy wheelchair navigation; adaptive bikes available."
+      }
+    },
+    {
+      "id": "yukon-fireside-respite",
+      "displayName": "Yukon Fireside Respite, Whitehorse",
+      "region": "Yukon Territory, Canada",
+      "setting": "boreal forest lodge",
+      "idealFor": [
+        "seasonal affective dips",
+        "compassion fatigue"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Fire-circle storytelling and dogsled cuddle sessions rebuild warmth for helpers running cold.",
+      "recommendedSeasons": [
+        "winter",
+        "early spring"
+      ],
+      "typicalStayNights": [
+        4,
+        6
+      ],
+      "signatureActivities": [
+        {
+          "name": "Aromatherapy sauna nights",
+          "whyItHelps": "Heat plus cedar scent boosts serotonin in dark months."
+        },
+        {
+          "name": "Dog sled snuggle hour",
+          "whyItHelps": "Canine regulation lowers cortisol quickly."
+        }
+      ],
+      "therapeuticFocus": [
+        "heat therapy",
+        "story medicine",
+        "animal-assisted support"
+      ],
+      "clinicianNotes": "Monitor frostbite risk; loaner gear included.",
+      "accessibilityNotes": "Heated paths cleared daily; sled modifies for seated riders.",
+      "travelCompanions": [
+        "solo",
+        "care team"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?yukon,winter,lodge",
+          "alt": "Snowy Yukon lodge with warm firelight",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "seasonal-affective-dips",
+          "compassion-fatigue"
+        ],
+        "modalityTags": [
+          "heat-therapy",
+          "story-medicine",
+          "animal-assisted-support"
+        ],
+        "seasonTags": [
+          "winter",
+          "early-spring"
+        ],
+        "groupTags": [
+          "solo",
+          "care-team"
+        ],
+        "settingTag": "boreal-forest-lodge",
+        "regionTag": "yukon-territory-canada",
+        "climateTag": "climate-cold-polar",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Monitor frostbite risk; loaner gear included.",
+        "accessSupportSummary": "Heated paths cleared daily; sled modifies for seated riders."
+      }
+    },
+    {
+      "id": "aegean-blue-mind-voyage",
+      "displayName": "Aegean Blue Mind Voyage, Cyclades",
+      "region": "Greece",
+      "setting": "island-hopping sailboat",
+      "idealFor": [
+        "relationship repair",
+        "perfectionism burnout"
+      ],
+      "energyLevel": "medium",
+      "costTier": "high",
+      "summary": "Therapist-hosted catamaran uses blue-mind science to help couples reset through playful exploration.",
+      "recommendedSeasons": [
+        "late spring",
+        "early autumn"
+      ],
+      "typicalStayNights": [
+        5,
+        7
+      ],
+      "signatureActivities": [
+        {
+          "name": "Bow wave entrainment",
+          "whyItHelps": "Watching rhythmic waves regulates breathing and syncs partners."
+        },
+        {
+          "name": "Harbor honesty hours",
+          "whyItHelps": "Structured dialogues timed with sunset cues support vulnerability."
+        }
+      ],
+      "therapeuticFocus": [
+        "couples coaching",
+        "play therapy",
+        "movement mindfulness"
+      ],
+      "clinicianNotes": "Ensure clients comfortable with open water; alternative harbor nights available.",
+      "accessibilityNotes": "Swim ladders stable; request transfer board in advance.",
+      "travelCompanions": [
+        "partner",
+        "small group"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?cyclades,sailboat,blue",
+          "alt": "Sailboat drifting through blue Cycladic waters",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "relationship-repair",
+          "perfectionism-burnout"
+        ],
+        "modalityTags": [
+          "couples-coaching",
+          "play-therapy",
+          "movement-mindfulness"
+        ],
+        "seasonTags": [
+          "late-spring",
+          "early-autumn"
+        ],
+        "groupTags": [
+          "partner",
+          "small-group"
+        ],
+        "settingTag": "island-hopping-sailboat",
+        "regionTag": "greece",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Ensure clients comfortable with open water; alternative harbor nights available.",
+        "accessSupportSummary": "Swim ladders stable; request transfer board in advance."
+      }
+    },
+    {
+      "id": "lava-flow-reset",
+      "displayName": "Lava Flow Reset, Reykjanes",
+      "region": "Iceland",
+      "setting": "geothermal coastline",
+      "idealFor": [
+        "anger processing",
+        "somatic flashbacks"
+      ],
+      "energyLevel": "medium",
+      "costTier": "high",
+      "summary": "Nature guides use active lava fields and warm lagoons to help clients externalize pent-up heat safely.",
+      "recommendedSeasons": [
+        "shoulder seasons",
+        "winter"
+      ],
+      "typicalStayNights": [
+        4,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Steam vent release",
+          "whyItHelps": "Sounding exercises near steam plumes allow visceral emotion expression."
+        },
+        {
+          "name": "Lava moss barefooting",
+          "whyItHelps": "Soft moss textures calm the nervous system after intense processing."
+        }
+      ],
+      "therapeuticFocus": [
+        "somatic expression",
+        "hydrotherapy",
+        "anger literacy"
+      ],
+      "clinicianNotes": "Safety briefings mandatory near lava; trauma therapist on every outing.",
+      "accessibilityNotes": "Select paths paved; flotation devices at lagoons.",
+      "travelCompanions": [
+        "solo",
+        "therapist"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?iceland,lava,lagoon",
+          "alt": "Geothermal steam rising over Icelandic lava fields",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "anger-processing",
+          "somatic-flashbacks"
+        ],
+        "modalityTags": [
+          "somatic-expression",
+          "hydrotherapy",
+          "anger-literacy"
+        ],
+        "seasonTags": [
+          "shoulder-seasons",
+          "winter"
+        ],
+        "groupTags": [
+          "solo",
+          "therapist"
+        ],
+        "settingTag": "geothermal-coastline",
+        "regionTag": "iceland",
+        "climateTag": "climate-cold-polar",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Safety briefings mandatory near lava; trauma therapist on every outing.",
+        "accessSupportSummary": "Select paths paved; flotation devices at lagoons."
+      }
+    },
+    {
+      "id": "tasmanian-wildgarden-haven",
+      "displayName": "Tasmanian Wildgarden Haven, Bruny Island",
+      "region": "Tasmania, Australia",
+      "setting": "temperate coastal sanctuary",
+      "idealFor": [
+        "eco-anxiety",
+        "overwhelm"
+      ],
+      "energyLevel": "medium",
+      "costTier": "medium",
+      "summary": "Rewilding projects paired with mindful volunteering give purpose to clients spiraling about the planet.",
+      "recommendedSeasons": [
+        "summer",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        6,
+        8
+      ],
+      "signatureActivities": [
+        {
+          "name": "Penguin burrow checks",
+          "whyItHelps": "Hands-on care channels anxious energy into stewardship."
+        },
+        {
+          "name": "Native herb kitchens",
+          "whyItHelps": "Cooking with endemic plants reinforces hopeful narratives."
+        }
+      ],
+      "therapeuticFocus": [
+        "eco-therapy",
+        "purpose activation",
+        "mindful service"
+      ],
+      "clinicianNotes": "Daily debriefs prevent secondary trauma from wildlife encounters.",
+      "accessibilityNotes": "Boardwalks accessible; field work optional.",
+      "travelCompanions": [
+        "solo",
+        "volunteer cohort"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?bruny-island,coast,nature",
+          "alt": "Rugged Bruny Island coastline with native vegetation",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "eco-anxiety",
+          "overwhelm"
+        ],
+        "modalityTags": [
+          "eco-therapy",
+          "purpose-activation",
+          "mindful-service"
+        ],
+        "seasonTags": [
+          "summer",
+          "autumn"
+        ],
+        "groupTags": [
+          "solo",
+          "volunteer-cohort"
+        ],
+        "settingTag": "temperate-coastal-sanctuary",
+        "regionTag": "tasmania-australia",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Daily debriefs prevent secondary trauma from wildlife encounters.",
+        "accessSupportSummary": "Boardwalks accessible; field work optional."
+      }
+    },
+    {
+      "id": "black-forest-sound-studio",
+      "displayName": "Black Forest Sound Studio, Baden",
+      "region": "Germany",
+      "setting": "evergreen highlands",
+      "idealFor": [
+        "auditory overwhelm",
+        "creative freeze"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Analog recording cabins capture forest soundscapes to help clients regain agency over sound.",
+      "recommendedSeasons": [
+        "spring",
+        "winter"
+      ],
+      "typicalStayNights": [
+        3,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Soundboard exposure",
+          "whyItHelps": "Guests remix safe sounds, rebuilding tolerance to layered audio."
+        },
+        {
+          "name": "Forest metronome walks",
+          "whyItHelps": "Footfall rhythm plus metronome trains focus."
+        }
+      ],
+      "therapeuticFocus": [
+        "music therapy",
+        "graded exposure",
+        "mindful listening"
+      ],
+      "clinicianNotes": "Ear breaks scheduled every hour to prevent fatigue.",
+      "accessibilityNotes": "Studios ground-level; vibrating alert systems available.",
+      "travelCompanions": [
+        "solo",
+        "producer"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?black-forest,germany,cabin",
+          "alt": "Cozy cabin tucked in Germany's Black Forest",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "auditory-overwhelm",
+          "creative-freeze"
+        ],
+        "modalityTags": [
+          "music-therapy",
+          "graded-exposure",
+          "mindful-listening"
+        ],
+        "seasonTags": [
+          "spring",
+          "winter"
+        ],
+        "groupTags": [
+          "solo",
+          "producer"
+        ],
+        "settingTag": "evergreen-highlands",
+        "regionTag": "germany",
+        "climateTag": "climate-temperate-mixed",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Ear breaks scheduled every hour to prevent fatigue.",
+        "accessSupportSummary": "Studios ground-level; vibrating alert systems available."
+      }
+    },
+    {
+      "id": "sahara-nomad-stillpoint",
+      "displayName": "Sahara Nomad Stillpoint, Erg Chebbi",
+      "region": "Morocco",
+      "setting": "desert caravan",
+      "idealFor": [
+        "identity loss",
+        "mind racing"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Berber guides lead slow camel crossings with nightly story tents to help guests listen inward.",
+      "recommendedSeasons": [
+        "winter",
+        "early spring"
+      ],
+      "typicalStayNights": [
+        4,
+        6
+      ],
+      "signatureActivities": [
+        {
+          "name": "Dune silence fast",
+          "whyItHelps": "Hours of intentional quiet break ruminative chatter."
+        },
+        {
+          "name": "Ember journaling",
+          "whyItHelps": "Writing beside embers anchors insights somatically."
+        }
+      ],
+      "therapeuticFocus": [
+        "silence practice",
+        "story medicine",
+        "movement meditation"
+      ],
+      "clinicianNotes": "Hydration protocols strict; satellite comms for safety.",
+      "accessibilityNotes": "Camel saddles with back support; 4x4 support vehicle trails nearby.",
+      "travelCompanions": [
+        "solo",
+        "small cohort"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?sahara,desert,caravan",
+          "alt": "Camel caravan crossing Morocco's Erg Chebbi dunes",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "identity-loss",
+          "mind-racing"
+        ],
+        "modalityTags": [
+          "silence-practice",
+          "story-medicine",
+          "movement-meditation"
+        ],
+        "seasonTags": [
+          "winter",
+          "early-spring"
+        ],
+        "groupTags": [
+          "solo",
+          "small-cohort"
+        ],
+        "settingTag": "desert-caravan",
+        "regionTag": "morocco",
+        "climateTag": "climate-arid-hot",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Hydration protocols strict; satellite comms for safety.",
+        "accessSupportSummary": "Camel saddles with back support; 4x4 support vehicle trails nearby."
+      }
+    },
+    {
+      "id": "seoul-breathwork-loft",
+      "displayName": "Seoul Breathwork Loft",
+      "region": "South Korea",
+      "setting": "city rooftop oasis",
+      "idealFor": [
+        "panic relapses",
+        "executive stress"
+      ],
+      "energyLevel": "medium",
+      "costTier": "high",
+      "summary": "High-rise loft teams VR biofeedback with rooftop gardens for urban professionals needing discreet resets.",
+      "recommendedSeasons": [
+        "spring",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        2,
+        3
+      ],
+      "signatureActivities": [
+        {
+          "name": "Hangeul box breathing",
+          "whyItHelps": "Tracing Korean characters guides breath cadence."
+        },
+        {
+          "name": "Skyline EMDR light bar",
+          "whyItHelps": "City lights become bilateral stimulation aids."
+        }
+      ],
+      "therapeuticFocus": [
+        "biofeedback",
+        "breathwork",
+        "somatic coaching"
+      ],
+      "clinicianNotes": "Great as a mini- intensive between therapy blocks; confidentiality emphasized.",
+      "accessibilityNotes": "Elevator access direct to loft; sensory rooms with dimmable lighting.",
+      "travelCompanions": [
+        "solo"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?seoul,rooftop,garden",
+          "alt": "Rooftop garden overlooking Seoul skyline at dusk",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "panic-relapses",
+          "executive-stress"
+        ],
+        "modalityTags": [
+          "biofeedback",
+          "breathwork",
+          "somatic-coaching"
+        ],
+        "seasonTags": [
+          "spring",
+          "autumn"
+        ],
+        "groupTags": [
+          "solo"
+        ],
+        "settingTag": "city-rooftop-oasis",
+        "regionTag": "south-korea",
+        "climateTag": "climate-urban-microclimate",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.6,
+          "activation": "balanced"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Great as a mini- intensive between therapy blocks; confidentiality emphasized.",
+        "accessSupportSummary": "Elevator access direct to loft; sensory rooms with dimmable lighting."
+      }
+    },
+    {
+      "id": "patagonia-wind-dialogues",
+      "displayName": "Patagonia Wind Dialogues, El Chalt\u00e9n",
+      "region": "Argentinian Patagonia",
+      "setting": "glacial valley",
+      "idealFor": [
+        "stuck grief",
+        "leadership reset"
+      ],
+      "energyLevel": "high",
+      "costTier": "medium",
+      "summary": "Mountain guides and therapists combine wind-listening hikes with coaching to help clients release bottled emotion.",
+      "recommendedSeasons": [
+        "summer"
+      ],
+      "typicalStayNights": [
+        6,
+        8
+      ],
+      "signatureActivities": [
+        {
+          "name": "Wind dialogue belays",
+          "whyItHelps": "Climbing while naming emotions builds trust in personal voice."
+        },
+        {
+          "name": "Glacier drum circles",
+          "whyItHelps": "Percussion against ice walls amplifies catharsis."
+        }
+      ],
+      "therapeuticFocus": [
+        "adventure therapy",
+        "emotional literacy",
+        "team coaching"
+      ],
+      "clinicianNotes": "Pre-screen for knee stability; winds can exceed 40 mph.",
+      "accessibilityNotes": "Horseback scenic routes available for low-mobility guests.",
+      "travelCompanions": [
+        "team",
+        "solo"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?patagonia,fitz-roy,trek",
+          "alt": "Dramatic Fitz Roy peaks above El Chalt\u00e9n",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "stuck-grief",
+          "leadership-reset"
+        ],
+        "modalityTags": [
+          "adventure-therapy",
+          "emotional-literacy",
+          "team-coaching"
+        ],
+        "seasonTags": [
+          "summer"
+        ],
+        "groupTags": [
+          "team",
+          "solo"
+        ],
+        "settingTag": "glacial-valley",
+        "regionTag": "argentinian-patagonia",
+        "climateTag": "climate-cool-mountain",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.85,
+          "activation": "stimulating"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Pre-screen for knee stability; winds can exceed 40 mph.",
+        "accessSupportSummary": "Horseback scenic routes available for low-mobility guests."
+      }
+    },
+    {
+      "id": "cenote-silence-lab",
+      "displayName": "Cenote Silence Lab, Tulum",
+      "region": "Yucat\u00e1n, Mexico",
+      "setting": "jungle cenote network",
+      "idealFor": [
+        "trauma-linked hypervigilance",
+        "emotional numbness"
+      ],
+      "energyLevel": "low",
+      "costTier": "medium",
+      "summary": "Subterranean water sessions plus dye-free sensory labs coax shut-down clients back into feeling.",
+      "recommendedSeasons": [
+        "winter",
+        "spring"
+      ],
+      "typicalStayNights": [
+        5,
+        7
+      ],
+      "signatureActivities": [
+        {
+          "name": "Cenote float therapy",
+          "whyItHelps": "Buoyancy and echo dampening calm hypervigilant systems."
+        },
+        {
+          "name": "Mayan clay mapping",
+          "whyItHelps": "Cool clay body maps reconnect sensation layers."
+        }
+      ],
+      "therapeuticFocus": [
+        "somatic therapy",
+        "sensory thawing",
+        "breath-led exposure"
+      ],
+      "clinicianNotes": "Contraindicated for open wounds; trauma therapists on call.",
+      "accessibilityNotes": "Sturdy stairs with rails; pool lifts available.",
+      "travelCompanions": [
+        "solo",
+        "care partner"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?tulum,cenote,retreat",
+          "alt": "Crystal clear cenote surrounded by jungle",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "trauma-linked-hypervigilance",
+          "emotional-numbness"
+        ],
+        "modalityTags": [
+          "somatic-therapy",
+          "sensory-thawing",
+          "breath-led-exposure"
+        ],
+        "seasonTags": [
+          "winter",
+          "spring"
+        ],
+        "groupTags": [
+          "solo",
+          "care-partner"
+        ],
+        "settingTag": "jungle-cenote-network",
+        "regionTag": "yucat-n-mexico",
+        "climateTag": "climate-tropical-humid",
+        "stayBucket": "standard",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 2,
+          "bucket": "mid"
+        },
+        "contraindicationSummary": "Contraindicated for open wounds; trauma therapists on call.",
+        "accessSupportSummary": "Sturdy stairs with rails; pool lifts available."
+      }
+    },
+    {
+      "id": "himalayan-monastery-integration",
+      "displayName": "Himalayan Monastery Integration, Paro",
+      "region": "Bhutan",
+      "setting": "mountain monastery",
+      "idealFor": [
+        "spiritual disorientation",
+        "purpose loss"
+      ],
+      "energyLevel": "low",
+      "costTier": "high",
+      "summary": "Monastic integration mentors guide guests through contemplative schedules to weave insights from previous psychedelic or therapy work.",
+      "recommendedSeasons": [
+        "spring",
+        "autumn"
+      ],
+      "typicalStayNights": [
+        7,
+        10
+      ],
+      "signatureActivities": [
+        {
+          "name": "Thangka reflection blocks",
+          "whyItHelps": "Focused art study organizes complex revelations."
+        },
+        {
+          "name": "Prayer flag intentions",
+          "whyItHelps": "Externalizing hopes on flags offers visible progress markers."
+        }
+      ],
+      "therapeuticFocus": [
+        "integration coaching",
+        "compassion training",
+        "breath meditation"
+      ],
+      "clinicianNotes": "Respect local protocols; coordinate with primary therapists for continuity.",
+      "accessibilityNotes": "Stair-heavy site; porters assist with luggage.",
+      "travelCompanions": [
+        "solo"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?paro,bhutan,monastery",
+          "alt": "Hilltop monastery overlooking Bhutan's Paro Valley",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "spiritual-disorientation",
+          "purpose-loss"
+        ],
+        "modalityTags": [
+          "integration-coaching",
+          "compassion-training",
+          "breath-meditation"
+        ],
+        "seasonTags": [
+          "spring",
+          "autumn"
+        ],
+        "groupTags": [
+          "solo"
+        ],
+        "settingTag": "mountain-monastery",
+        "regionTag": "bhutan",
+        "climateTag": "climate-cool-mountain",
+        "stayBucket": "extended",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 3,
+          "bucket": "premium"
+        },
+        "contraindicationSummary": "Respect local protocols; coordinate with primary therapists for continuity.",
+        "accessSupportSummary": "Stair-heavy site; porters assist with luggage."
+      }
+    },
+    {
+      "id": "great-lakes-firefly-camp",
+      "displayName": "Great Lakes Firefly Camp, Upper Peninsula",
+      "region": "Michigan, USA",
+      "setting": "lakefront pine forest",
+      "idealFor": [
+        "parental burnout",
+        "social disconnection"
+      ],
+      "energyLevel": "low",
+      "costTier": "low",
+      "summary": "Family-friendly cabins with twilight storytelling and bio-luminescent walks nurture wonder for exhausted parents.",
+      "recommendedSeasons": [
+        "summer"
+      ],
+      "typicalStayNights": [
+        3,
+        5
+      ],
+      "signatureActivities": [
+        {
+          "name": "Firefly focus walks",
+          "whyItHelps": "Watching gentle lights trains shared attention without screens."
+        },
+        {
+          "name": "Pinecone gratitude circles",
+          "whyItHelps": "Hands-on rituals help families express appreciation."
+        }
+      ],
+      "therapeuticFocus": [
+        "family bonding",
+        "nature play",
+        "restorative sleep"
+      ],
+      "clinicianNotes": "Bug season heavy; provide netted hats for anxious kids.",
+      "accessibilityNotes": "Boardwalk cabins ADA compliant; sensory kits available.",
+      "travelCompanions": [
+        "family"
+      ],
+      "media": {
+        "coverImage": {
+          "url": "https://source.unsplash.com/featured/?great-lakes,fireflies,camp",
+          "alt": "Campfire beside a Great Lakes shoreline at night",
+          "source": "Unsplash featured search",
+          "license": "Unsplash License"
+        }
+      },
+      "matchingProfile": {
+        "emotionTags": [
+          "parental-burnout",
+          "social-disconnection"
+        ],
+        "modalityTags": [
+          "family-bonding",
+          "nature-play",
+          "restorative-sleep"
+        ],
+        "seasonTags": [
+          "summer"
+        ],
+        "groupTags": [
+          "family"
+        ],
+        "settingTag": "lakefront-pine-forest",
+        "regionTag": "michigan-usa",
+        "climateTag": "climate-coastal-temperate",
+        "stayBucket": "micro",
+        "energyScore": {
+          "score": 0.3,
+          "activation": "downshift"
+        },
+        "costScore": {
+          "score": 1,
+          "bucket": "budget"
+        },
+        "contraindicationSummary": "Bug season heavy; provide netted hats for anxious kids.",
+        "accessSupportSummary": "Boardwalk cabins ADA compliant; sensory kits available."
+      }
+    }
+  ],
+  "geminiMatching": {
+    "inputSchema": {
+      "fields": [
+        {
+          "id": "emotion_state",
+          "type": "string",
+          "enum": "emotionTags",
+          "description": "Primary emotional presentation or mental-health need."
+        },
+        {
+          "id": "intensity",
+          "type": "enum",
+          "values": [
+            "mild",
+            "moderate",
+            "acute"
+          ],
+          "description": "Self-reported intensity of current state."
+        },
+        {
+          "id": "sensitivities",
+          "type": "list",
+          "description": "Triggers, phobias, or contraindications to avoid."
+        },
+        {
+          "id": "budgetTier",
+          "type": "enum",
+          "values": [
+            "budget",
+            "mid",
+            "premium"
+          ]
+        },
+        {
+          "id": "energyPreference",
+          "type": "enum",
+          "values": [
+            "downshift",
+            "balanced",
+            "stimulating"
+          ]
+        },
+        {
+          "id": "climatePreference",
+          "type": "enum",
+          "values": [
+            "climate-coastal-temperate",
+            "climate-temperate-forest",
+            "climate-cool-mountain",
+            "climate-arid-hot",
+            "climate-tropical-humid",
+            "climate-urban-microclimate",
+            "climate-cold-polar",
+            "climate-temperate-mixed"
+          ]
+        },
+        {
+          "id": "groupMode",
+          "type": "enum",
+          "values": "groupTags"
+        },
+        {
+          "id": "desiredStay",
+          "type": "enum",
+          "values": [
+            "micro",
+            "standard",
+            "extended"
+          ]
+        }
+      ]
+    },
+    "scoring": {
+      "description": "Gemini calculates cosine-style similarity between user intent tags and destination matchingProfile tags plus numeric penalties for contraindications and budget/energy mismatches.",
+      "weights": {
+        "emotionTags": 0.35,
+        "modalityTags": 0.2,
+        "energyScore": 0.1,
+        "costScore": 0.1,
+        "climateTag": 0.1,
+        "stayBucket": 0.05,
+        "groupTags": 0.05,
+        "seasonTags": 0.05
+      },
+      "hardStops": [
+        "If sensitivities overlap clinician contraindications, drop destination",
+        "If desired budget tier < destination cost bucket by more than 1 level, mark as fallback"
+      ]
+    },
+    "promptTemplate": "Given the user emotional brief and the destination catalog, produce top 3 matches by summarizing why each destination fits, referencing matchingProfile fields. Respond with JSON matching {recommendations:[{destinationId,fitReasoning,confidence}]}.",
+    "llmContextHints": [
+      "Emotion tags and modality tags are lower-case kebab-case tokens; partial matches count.",
+      "Energy score contains both numeric score and activation bucket.",
+      "Use clinician and accessibility summaries to filter for safety needs."
+    ]
+  }
+}

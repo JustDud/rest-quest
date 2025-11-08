@@ -1,0 +1,11 @@
+{
+  "emotion_state": "anxiety spikes",
+  "intensity": "moderate",
+  "sensitivities": ["motion sickness"],
+  "budgetTier": "mid",
+  "energyPreference": "downshift",
+  "climatePreference": "climate-coastal-temperate",
+  "groupMode": "solo",
+  "desiredStay": "micro",
+  "desiredModalities": ["forest bathing", "guided journaling"]
+}
