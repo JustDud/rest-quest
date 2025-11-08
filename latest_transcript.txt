@@ -1,0 +1,7 @@
+Session recorded at 2025-11-08T16:37:17.250341+00:00
+USER: Zdravo. (pauses of three seconds)
+ASSISTANT: Hello! I sense a need for grounding. To start, how are you feeling right now, and what kind of environment is calling to you most?
+USER: If I feel normal, I want to go to the mountains.
+ASSISTANT: Okay, I'm ready.
+
+How are you feeling today, and what kind of experience are you hoping for?

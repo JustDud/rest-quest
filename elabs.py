@@ -2,9 +2,9 @@ import io
 import os
 import time
 import wave
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional, Sequence, Tuple
 
 from dotenv import load_dotenv
 from elevenlabs import stream as play_stream
@@ -17,6 +17,7 @@ from elevenlabs.types import (
     SpeechToTextWebhookResponseModel,
 )
 from gemini_client import get_trip_response
+from prompts import INTRO_PROMPT
 
 try:
     import sounddevice as sd
@@ -34,8 +35,7 @@ DEFAULT_STREAM_FORMAT: TextToSpeechStreamRequestOutputFormat = "mp3_44100_128"
 LISTEN_SAMPLE_RATE = 16_000
 LISTEN_CHANNELS = 1
 CONVERSATION_LOG = Path("conversation_log.txt")
-
-
+SESSION_TRANSCRIPT = Path("latest_transcript.txt")
 def _resolve_api_key() -> str:
     api_key = os.getenv("ELEVENLABS_API_KEY") or os.getenv("ELEVEN_LABS_API_KEY")
     if not api_key:
@@ -179,6 +179,8 @@ def capture_and_forward(
     duration_seconds: float = 6.0,
     *,
     transcribe: bool = True,
+    history: Optional[List[Tuple[str, str]]] = None,
+    stage_instruction: str = "follow_up_question",
 ) -> tuple[str, str]:
     """
     Record the user, persist the transcript, query Gemini, and respond via ElevenLabs TTS.
@@ -188,8 +190,16 @@ def capture_and_forward(
         raise RuntimeError("Transcription failed, cannot continue the Gemini → ElevenLabs pipeline.")
 
     log_conversation("user", transcript)
-    assistant_reply = get_trip_response(transcript)
+    if history is not None:
+        history.append(("user", transcript))
+    assistant_reply = get_trip_response(
+        transcript,
+        history=history,
+        stage_instruction=stage_instruction,
+    )
     log_conversation("assistant", assistant_reply)
+    if history is not None:
+        history.append(("assistant", assistant_reply))
 
     send_text_to_elevenlabs(assistant_reply, playback=True)
     return transcript, assistant_reply
@@ -236,10 +246,43 @@ def log_conversation(role: str, text: str, *, log_path: Path = CONVERSATION_LOG)
     Append a timestamped entry to the conversation log.
     """
     log_path.parent.mkdir(parents=True, exist_ok=True)
-    timestamp = datetime.utcnow().isoformat()
+    timestamp = datetime.now(UTC).isoformat()
     with log_path.open("a", encoding="utf-8") as handle:
         handle.write(f"{timestamp} | {role.upper()} | {text.strip()}\n")
     return log_path
+
+
+def reset_conversation_log(log_path: Path = CONVERSATION_LOG) -> Path:
+    """
+    Clear the persistent conversation log so only the latest session is stored.
+    """
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    log_path.write_text("", encoding="utf-8")
+    return log_path
+
+
+def ensure_intro_prompt(history: List[Tuple[str, str]]) -> None:
+    """
+    Play the introductory greeting once per session.
+    """
+    if any(role == "assistant" and text == INTRO_PROMPT for role, text in history):
+        return
+    log_conversation("assistant", INTRO_PROMPT)
+    history.append(("assistant", INTRO_PROMPT))
+    send_text_to_elevenlabs(INTRO_PROMPT, playback=True)
+
+
+def save_transcript(entries: Sequence[Tuple[str, str]], *, transcript_path: Path = SESSION_TRANSCRIPT) -> Path:
+    """
+    Persist a full session transcript after a multi-turn interaction.
+    """
+    transcript_path.parent.mkdir(parents=True, exist_ok=True)
+    header = f"Session recorded at {datetime.now(UTC).isoformat()}\n"
+    with transcript_path.open("w", encoding="utf-8") as handle:
+        handle.write(header)
+        for role, text in entries:
+            handle.write(f"{role.upper()}: {text.strip()}\n")
+    return transcript_path
 
 
 def _is_missing_permission_error(error: ApiError, permission: str) -> bool:
@@ -249,7 +292,39 @@ def _is_missing_permission_error(error: ApiError, permission: str) -> bool:
     return status == "missing_permissions" and permission in message
 
 
+def run_conversation(
+    turns: int = 2,
+    *,
+    transcript_path: Path = SESSION_TRANSCRIPT,
+) -> Path:
+    """
+    Run multiple conversation turns and save a consolidated transcript.
+    """
+    stage_sequence = _build_stage_sequence(turns)
+    history: List[Tuple[str, str]] = []
+    reset_conversation_log()
+    ensure_intro_prompt(history)
+
+    for turn_index, stage in enumerate(stage_sequence, start=1):
+        print(f"\n--- Turn {turn_index}/{len(stage_sequence)} ({stage}) ---")
+        user_text, assistant_text = capture_and_forward(
+            transcribe=True,
+            history=history,
+            stage_instruction=stage,
+        )
+        print(f"User: {user_text}")
+        print(f"Assistant: {assistant_text}")
+
+    transcript_file = save_transcript(history, transcript_path=transcript_path)
+    print(f"Saved session transcript to {transcript_file.resolve()}")
+    return transcript_file
+
+
+def _build_stage_sequence(turns: int) -> List[str]:
+    if turns <= 1:
+        return ["final_recommendation"]
+    return ["follow_up_question"] * (turns - 1) + ["final_recommendation"]
+
+
 if __name__ == "__main__":
-    user_text, assistant_text = capture_and_forward(transcribe=True)
-    print(f"Transcript: {user_text}")
-    print(f"Assistant reply: {assistant_text}")
+    run_conversation()

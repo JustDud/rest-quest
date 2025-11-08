@@ -1,7 +1,15 @@
-2025-11-08T15:27:27.939848 | USER | Hello!
-2025-11-08T15:43:16.293251 | USER | Test. Come on, answer me. We are.
-2025-11-08T15:48:29.715636 | USER | (00:02:58) Advertise it to them that it was really, really pronounced. Yeah, yeah, yeah.
-2025-11-08T15:50:18.595183 | USER | Hello. We're just going to.
-2025-11-08T15:50:19.713138 | ASSISTANT | Hello there! It sounds like you're about to share something exciting. To help me recommend the perfect travel experience for you, tell me more!
-
-*   What are you hoping to get out of this trip? (e.g., relaxation, adventure, inspiration?)
+2025-11-08T17:42:58.980456+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
+2025-11-08T17:43:15.905437+00:00 | USER | I feel fine and I want to go hiking.
+2025-11-08T17:43:16.818887+00:00 | ASSISTANT | Okay, great! To make the hiking trip perfect, what kind of scenery, solitude, or social experience are you hoping for?
+2025-11-08T17:43:33.925879+00:00 | USER | Big group of people.
+2025-11-08T17:43:35.353405+00:00 | ASSISTANT | Okay, you're feeling good and looking for a social hiking adventure. For your next trip, how about a mountain getaway with a focus on boosting energy and connection? I recommend a group hike with opportunities for sharing stories and laughter. To enhance the experience, try a mindful walking meditation to ground you and connect you with the environment.
+```json
+{
+  "assistant_reply": "For a social hiking trip, you're seeking energy and connection. I suggest a mountain getaway with group hikes for shared stories and laughter.",
+  "recommendation": {
+    "destination_type": "mountain",
+    "wellbeing_focus": "energy / social recharge",
+    "sample_activity": "mindful walking meditation"
+  }
+}
+```
