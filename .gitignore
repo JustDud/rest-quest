@@ -43,3 +43,7 @@ htmlcov/
 dmypy.json
 .pytype/
 
+.venv/bin/activate.csh
+.venv
+__pycache__
+.env

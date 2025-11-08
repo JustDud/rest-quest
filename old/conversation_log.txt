@@ -1,0 +1,12 @@
+2025-11-08T19:32:15.717461+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
+2025-11-08T19:32:33.195843+00:00 | USER | I go-- I говорю, я с тобой разговариваю. Слушаю. Так, я не молчу. Спасибо.
+2025-11-08T19:32:34.004762+00:00 | ASSISTANT | It sounds like you're ready for a change! To best advise you, what kind of feeling are you hoping to cultivate during this trip?
+2025-11-08T19:32:47.936322+00:00 | USER | Don't bring it.
+2025-11-08T19:32:49.057515+00:00 | ASSISTANT | {
+  "assistant_reply": "It seems like you need a place to release tension and feel safe. How about a quiet forest retreat, offering space to breathe and reconnect? Try a walking meditation to ground yourself.",
+  "recommendation": {
+    "destination_type": "forest",
+    "wellbeing_focus": "relaxation",
+    "sample_activity": "walking meditation"
+  }
+}
