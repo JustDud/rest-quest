@@ -143,6 +143,16 @@ export function AmbientSoundscape({ analysis }) {
 
   useEffect(() => {
     const handleKey = (event) => {
+      const target = event.target;
+      const tagName = target?.tagName;
+      if (
+        tagName === 'INPUT' ||
+        tagName === 'TEXTAREA' ||
+        tagName === 'SELECT' ||
+        target?.isContentEditable
+      ) {
+        return;
+      }
       if (event.code === 'Space') {
         event.preventDefault();
         togglePlayback();

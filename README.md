@@ -5,11 +5,11 @@ Serenity AI is a single-page React experience crafted for premium wellness journ
 ## ✨ Highlights
 
 - **Hero Ritual**: Animated mesh gradients, breathing orb, flow-state ribbon pattern, and floating particles.
-- **Emotionally Intelligent Check-In**: Glassmorphic chat, AI empathy typing effect, radial biometrics, ambient sound toggle.
+- **Emotionally Intelligent Check-In**: Glassmorphic chat, AI empathy typing effect, radial biometrics, ambient sound toggle, live camera mirror.
 - **Conversational Questionnaire**: Sliders, multi-select pills, dual-range budgets, autocomplete locations, mandala progress indicator.
 - **AI Analysis Deck**: Morphing concentric visualization, live trigger bars (Recharts), floating focus tags.
 - **Tinder-Style Deck**: Gesture-driven cards with swipe physics, learn-more modal, floating control palette.
-- **Booking Recap & Celebration**: Saved stack grid, breathing CTA states, breathing overlay toggled with spacebar.
+- **Booking Recap & Celebration**: Saved stack grid, breathing CTA states, mindful ritual prompts (no global overlays).
 
 ## 🏗️ Tech Stack
 
@@ -27,7 +27,7 @@ Serenity AI is a single-page React experience crafted for premium wellness journ
 src/
   components/
     sections/             # Hero, EmotionalCheckIn, Preferences, Analysis, Deck, Booking, Celebration
-    ui/                   # GlassCard, GradientButton, FlowPattern, ParticleField, AmbientCursor, BreathingOverlay
+    ui/                   # GlassCard, GradientButton, FlowPattern, ParticleField, AmbientCursor
   contexts/               # EmotionalContext, PreferencesContext, ExperiencesContext
   data/                   # experiences.js (12 curated packs)
   hooks/                  # useBreathingAnimation, useCardSwipe, useTypedText, useMediaQuery
@@ -48,6 +48,20 @@ npm run preview    # preview prod build
 
 > Node 18+ recommended.
 
+## 🔌 Connecting the Analysis Service
+
+The React experience now talks to the Python analysis pipeline (Gemini + fallbacks) housed in `analysis/`.
+
+1. Install the Python dependencies (once): `pip install -r requirements.txt`
+2. Export `GEMINI_API_KEY` (or add it to `analysis/.env`)
+3. Start the API: `uvicorn analysis.api:app --reload --port 8000`
+4. (Optional) Point the frontend elsewhere with `VITE_ANALYSIS_ENDPOINT`; it defaults to `http://localhost:8000/analysis`. Override the capture endpoint with `VITE_CAMERA_CAPTURE_ENDPOINT` if you proxy it differently.
+5. During the Emotional Check-In, the UI calls `/camera/capture` which briefly opens the webcam, aggregates emotions, and feeds them into the analysis request. Override the Python binary with `CAMERA_PYTHON=/path/to/python` if needed.
+6. The live preview’s “Open camera” button streams `/camera/stream` (override via `VITE_CAMERA_STREAM_ENDPOINT`) so you can see the same annotated feed the backend uses.
+7. Clicking “Listen” also triggers `/session/start` (override via `VITE_SESSION_ENDPOINT`) which launches the full `project/main.py` workflow in the background; poll `/session/status` to inspect progress.
+
+When the API is unreachable, the UI automatically falls back to the in-browser heuristic analysis so flows remain demoable offline.
+
 ## 🧠 Key Concepts
 
 - **Emotion Simulation**: `mockEmotionAnalysis` inspects text for stress/energy keywords and drives biometrics, background speed, and recommendations.
@@ -58,7 +72,7 @@ npm run preview    # preview prod build
 - **Interaction Patterns**:
   - Cursor-following light bloom.
   - Flowing particle systems (adjusted for mobile via custom media query hook).
-  - Breathing overlay toggled with spacebar (4-7-8 cadences).
+  - Guided breathing CTA pulses within Celebration section (4-7-8 cadences).
   - Swipe deck with like/pass/undo controls + modal expansion.
 
 ## 🎨 Brand System
@@ -73,7 +87,7 @@ npm run preview    # preview prod build
 - Semantic structure + focus-visible states with brand colors.
 - Reduced-motion media query support.
 - Lazy-loaded imagery, memoized particles, and spring physics tuned for 60fps.
-- Keyboard actions: arrow/space for deck interactions, spacebar toggles breathing overlay.
+- Keyboard actions: arrow/space for deck interactions.
 
 ## 🔮 Next Ideas
 

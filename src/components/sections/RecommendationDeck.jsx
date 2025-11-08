@@ -60,6 +60,16 @@ export function RecommendationDeck() {
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
     const handler = (event) => {
+      const target = event.target;
+      const tagName = target?.tagName;
+      if (
+        tagName === 'INPUT' ||
+        tagName === 'TEXTAREA' ||
+        tagName === 'SELECT' ||
+        target?.isContentEditable
+      ) {
+        return;
+      }
       if (!current) return;
       if (event.code === 'ArrowRight') {
         event.preventDefault();

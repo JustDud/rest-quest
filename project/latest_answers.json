@@ -1,12 +1,12 @@
 [
   {
     "question": "Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.",
-    "transcript": "I feel good. (background chatter)",
+    "transcript": "Four, five, six, seven. Bing, bing, bing.",
     "dominant_emotion": "neutral"
   },
   {
-    "question": "Do you have a specific type of trip or activity in mind for this feeling of 'good'?",
-    "transcript": "I'm John.",
-    "dominant_emotion": "sad"
+    "question": "Did you want to share more about how you're feeling before we plan your trip?",
+    "transcript": "Which has given me a nice hike.",
+    "dominant_emotion": "neutral"
   }
 ]

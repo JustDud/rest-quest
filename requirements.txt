@@ -20,10 +20,10 @@ pytest>=7.0.0          # Testing framework
 pytest-cov>=4.0.0      # Coverage plugin
 
 # Optional: If adding a Python backend/API
-# fastapi>=0.100.0
-# uvicorn>=0.23.0
-# pydantic>=2.0.0
-# python-dotenv>=1.0.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.7.0
+python-dotenv==1.0.1
 
 # Optional: If adding data processing/ML
 # numpy>=1.24.0
@@ -43,7 +43,6 @@ pytest-cov>=4.0.0      # Coverage plugin
 # --- Core AI / LLM
 google-generativeai==0.8.5
 elevenlabs==2.22.0
-python-dotenv==1.0.1
 httpx==0.28.1
 requests==2.32.3
 
@@ -53,7 +52,7 @@ mediapipe==0.10.14
 
 # --- Optional face/affect toolkits (need TF)
 deepface==0.0.93
-fer==23.0.0
+fer==25.10.3
 
 # --- Numeric stack (compatible with TF 2.15)
 numpy==1.26.4
@@ -67,8 +66,9 @@ webrtcvad==2.0.10
 websockets==15.0.1
 
 # --- TensorFlow (CPU). On Mac add Metal below for GPU accel.
-tensorflow==2.15.0
-tensorflow-metal==1.1.0 ; sys_platform == "darwin"
+tensorflow==2.15.0 ; python_version < "3.12"
+tensorflow==2.18.0 ; python_version >= "3.12"
+tensorflow-metal==1.1.0 ; sys_platform == "darwin" and python_version < "3.12"
 
 # --- Typing helpers
-typing_extensions==4.11.0
+typing_extensions>=4.12.2

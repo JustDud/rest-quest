@@ -2,7 +2,7 @@
 
 This project is primarily a **Node.js/React** application. Dependencies are managed via `package.json`.
 
-The `requirements.txt` file is provided for optional Python tooling, scripts, or if you plan to add a Python backend.
+The `analysis/` folder now contains a lightweight FastAPI service that powers the Gemini-driven travel insights. Install the Python dependencies if you plan to start that service locally.
 
 ## Node.js Dependencies (Primary)
 
@@ -73,5 +73,14 @@ rest-quest/
 
 - **Main project**: Uses Node.js and `package.json` for dependencies
 - **Python tooling**: Optional, for scripts, testing, or backend services
-- **Backend API**: If adding a Python backend, uncomment relevant packages in `requirements.txt`
-
+- **Analysis API**:
+  ```bash
+  pip install -r requirements.txt
+  uvicorn analysis.api:app --reload --port 8000
+  ```
+  Point the React app to it with `VITE_ANALYSIS_ENDPOINT` (defaults to `http://localhost:8000/analysis`).
+- **Camera trigger**:
+  - The Emotional Check-In button calls `POST /camera/capture` to stream a short clip into the analysis.
+  - The on-page live preview pulls from `GET /camera/stream` (override via `VITE_CAMERA_STREAM_ENDPOINT`) so the annotated OpenCV frames appear inside the app.
+  - Logs land in `project/camera.log`. Set `CAMERA_PYTHON` if you need a specific interpreter for OpenCV/TF.
+- **Full session runner**: `POST /session/start` (front-end default) spins up the entire `project/main.py` workflow; `GET /session/status` reports progress plus the latest answers. Adjust the endpoint with `VITE_SESSION_ENDPOINT` if needed.

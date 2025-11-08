@@ -7,6 +7,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
+import numpy as np
+
 
 try:
     import cv2
@@ -82,14 +84,35 @@ class EmotionVisualizer:
                 # mirror trial_cam approach: keep references to face detection and drawing utils
                 self.mp_face = mp.solutions.face_detection
                 self.mp_draw = mp.solutions.drawing_utils
+                self.mp_face_mesh = mp.solutions.face_mesh
                 self.detector = self.mp_face.FaceDetection(min_detection_confidence=0.5)
+                try:
+                    self.face_mesh = self.mp_face_mesh.FaceMesh(
+                        static_image_mode=False,
+                        max_num_faces=1,
+                        refine_landmarks=True,
+                        min_detection_confidence=0.5,
+                        min_tracking_confidence=0.5,
+                    )
+                    self.face_connections = self.mp_face_mesh.FACEMESH_TESSELATION
+                    self.face_oval = self.mp_face_mesh.FACEMESH_FACE_OVAL
+                except Exception:
+                    self.face_mesh = None
+                    self.face_connections = None
+                    self.face_oval = None
                 self.use_mediapipe = True
             except Exception:
                 self.detector = None
                 self.use_mediapipe = False
+                self.face_mesh = None
+                self.face_connections = None
+                self.face_oval = None
         else:
             self.detector = None
             self.use_mediapipe = False
+            self.face_mesh = None
+            self.face_connections = None
+            self.face_oval = None
 
         if not self.use_mediapipe:
             # Haar cascades provided by OpenCV
@@ -118,6 +141,11 @@ class EmotionVisualizer:
         if getattr(self, "analyzer", None) is not None:
             try:
                 self.analyzer.stop()
+            except Exception:
+                pass
+        if getattr(self, "face_mesh", None) is not None:
+            try:
+                self.face_mesh.close()
             except Exception:
                 pass
         cv2.destroyAllWindows()
@@ -329,6 +357,7 @@ class EmotionAnalyzer:
 
         if self.use_mediapipe and self.detector is not None:
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            self._overlay_face_mesh(frame, rgb)
             detection = self.detector.process(rgb)
             if detection and getattr(detection, "detections", None):
                 detection_box = detection.detections[0].location_data.relative_bounding_box
@@ -405,6 +434,48 @@ class EmotionAnalyzer:
 
         return frame, scores
 
+    def _face_oval_points(self, landmarks, width: int, height: int) -> Optional[np.ndarray]:
+        if not getattr(self, "face_oval", None):
+            return None
+        seen = set()
+        points = []
+        for connection in self.face_oval:
+            for idx in connection:
+                if idx in seen:
+                    continue
+                lm = landmarks.landmark[idx]
+                points.append((int(lm.x * width), int(lm.y * height)))
+                seen.add(idx)
+        if len(points) < 3:
+            return None
+        return np.array(points, dtype=np.int32)
+
+    def _overlay_face_mesh(self, frame: Any, rgb_frame: Any) -> None:
+        if not getattr(self, "face_mesh", None):
+            return
+        try:
+            results = self.face_mesh.process(rgb_frame)
+        except Exception:
+            return
+        if not results.multi_face_landmarks:
+            return
+        height, width, _ = frame.shape
+        for face_landmarks in results.multi_face_landmarks:
+            if getattr(self, "face_connections", None):
+                self.mp_draw.draw_landmarks(
+                    image=frame,
+                    landmark_list=face_landmarks,
+                    connections=self.face_connections,
+                    landmark_drawing_spec=None,
+                    connection_drawing_spec=self.mp_draw.DrawingSpec(color=(25, 113, 194), thickness=1, circle_radius=1),
+                )
+            points = self._face_oval_points(face_landmarks, width, height)
+            if points is None:
+                continue
+            overlay = frame.copy()
+            cv2.fillPoly(overlay, [points], (25, 113, 194))
+            cv2.addWeighted(overlay, 0.15, frame, 0.85, 0, frame)
+
 
 def append_emotion_log(entry: Dict[str, object]) -> None:
     EMOTION_LOG.parent.mkdir(parents=True, exist_ok=True)
@@ -475,4 +546,3 @@ def warmup_detection(visualizer: EmotionVisualizer, aggregator: EmotionAggregato
         cv2.imshow("Emotion Tracker", frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             raise KeyboardInterrupt
-

@@ -28,8 +28,8 @@ export function CelebrationSection() {
         <p className="text-xs uppercase tracking-[0.5em] text-[#1971C2]">Next steps</p>
         <h2 className="text-4xl text-[#0B1728] font-['Plus_Jakarta_Sans']">Celebrating your journey</h2>
         <p className="text-[#0B1728]/70 max-w-2xl mx-auto">
-          Your inbox just received a calm itinerary + receipt. Tap space any time for a breathing reset, or sit with the
-          visualization below as your mandala earns a new petal.
+          Your inbox just received a calm itinerary + receipt. Settle into the visualization below as your mandala earns
+          a new petal, or simply rest before moving forward.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <GradientButton>Explore more</GradientButton>
@@ -41,9 +41,7 @@ export function CelebrationSection() {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="space-y-3 text-left">
             <p className="text-sm uppercase tracking-[0.4em] text-[#1971C2]/70">Breathing exercise</p>
-            <p className="text-[#0B1728]/70">
-              Inhale 4 · Hold 7 · Exhale 8 — repeat three times. Spacebar anywhere triggers the overlay again.
-            </p>
+            <p className="text-[#0B1728]/70">Inhale 4 · Hold 7 · Exhale 8 — repeat three times at your own pace.</p>
             <p className="text-[#0B1728]/60 text-sm">
               {priority.length} priority retreats saved · {liked.length} total experiences in your stack.
             </p>

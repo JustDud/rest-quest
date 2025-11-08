@@ -7,7 +7,6 @@ import { RecommendationDeck } from './components/sections/RecommendationDeck';
 import { BookingSummary } from './components/sections/BookingSummary';
 import { CelebrationSection } from './components/sections/CelebrationSection';
 import { AmbientCursor } from './components/ui/AmbientCursor';
-import { BreathingOverlay } from './components/ui/BreathingOverlay';
 import { AppProviders } from './providers/AppProviders';
 import { SerenityLayout } from './layouts/SerenityLayout';
 import { CinematicJourney } from './components/interactive/CinematicJourney';
@@ -17,7 +16,6 @@ function App() {
   return (
     <div className="font-['DM_Sans'] text-[#0B1728]">
       <AmbientCursor />
-      <BreathingOverlay />
       <SerenityLayout>
         <AppProviders>
           <HeroSection />
