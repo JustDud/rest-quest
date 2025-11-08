@@ -1,7 +1,7 @@
-
 import sys
 import cv2
 import mediapipe as mp
+from deepface import DeepFace
 
 def main(camera_index: int = 0, min_detection_confidence: float = 0.5):
     mp_face = mp.solutions.face_detection
@@ -19,17 +19,42 @@ def main(camera_index: int = 0, min_detection_confidence: float = 0.5):
                 print("Failed to read frame from camera")
                 break
 
-            # Mirror so user sees themselves
+            # Mirroring
             frame = cv2.flip(frame, 1)
+            
             # Convert BGR to RGB for MediaPipe
             rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             results = face_detector.process(rgb)
 
             if results.detections:
                 for det in results.detections:
-                    mp_draw.draw_detection(frame, det)
+                    bboxC = det.location_data.relative_bounding_box
+                    h, w, _ = frame.shape
+                    x1 = int(bboxC.xmin * w)
+                    y1 = int(bboxC.ymin * h)
+                    x2 = x1 + int(bboxC.width * w)
+                    y2 = y1 + int(bboxC.height * h)
 
-            cv2.imshow("Face Detection (press 'q' to quit)", frame)
+                    # Crop the face region safely
+                    face_roi = frame[max(0, y1):y2, max(0, x1):x2]
+
+                    if face_roi.size > 0:
+                        try:
+                            # Analyze emotion with DeepFace
+                            result = DeepFace.analyze(face_roi, actions=['emotion'], enforce_detection=False)
+                            emotion = result[0]['dominant_emotion']
+                            # Draw rectangle and emotion label
+                            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                            cv2.putText(frame, emotion, (x1, y1 - 10),
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2, cv2.LINE_AA)
+                        except Exception as e:
+                            print("Emotion detection error:", e)
+                            pass
+                    else:
+                        cv2.putText(frame, "No Face Detected", (50, 50),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 0, 255), 2, cv2.LINE_AA)
+
+            cv2.imshow("Emotion Detection (press 'q' to quit)", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
