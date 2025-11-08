@@ -1,0 +1,31 @@
+source /Users/vladyslavshutkevych/Desktop/Gestures/bsl_env_py311/bin/activate
+
+# Activate your environment
+source /Users/vladyslavshutkevych/Desktop/Gestures/bsl_env_py311/bin/activate
+
+# Set PYTHONPATH if needed
+export PYTHONPATH=$(pwd)/wp3-slr-pipeline/src:$PYTHONPATH
+
+# Run the script with your checkpoint
+python wp3-slr-pipeline/src/predict.py wp3-slr-pipeline/checkpoints/poseformer_v0.4_bsl_ba2d406.ckpt --embedding_kind CLS
+
+
+
+
+python3 -m venv emotion_env
+source emotion_env/bin/activate
+source bsl_env_py311/bin/activate
+
+
+
+cd /Users/vladyslavshutkevych/Desktop/Gestures
+git checkout -b camera
+git add .
+git commit -m "Describe changes"
+git push -u origin my-camera
+
+
+git checkout my-camera
+git add .
+git commit -m "Describe changes"
+git push -u origin my-camera
