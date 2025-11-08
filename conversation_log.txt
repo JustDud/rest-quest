@@ -1,0 +1,7 @@
+2025-11-08T15:27:27.939848 | USER | Hello!
+2025-11-08T15:43:16.293251 | USER | Test. Come on, answer me. We are.
+2025-11-08T15:48:29.715636 | USER | (00:02:58) Advertise it to them that it was really, really pronounced. Yeah, yeah, yeah.
+2025-11-08T15:50:18.595183 | USER | Hello. We're just going to.
+2025-11-08T15:50:19.713138 | ASSISTANT | Hello there! It sounds like you're about to share something exciting. To help me recommend the perfect travel experience for you, tell me more!
+
+*   What are you hoping to get out of this trip? (e.g., relaxation, adventure, inspiration?)

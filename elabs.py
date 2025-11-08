@@ -2,6 +2,7 @@ import io
 import os
 import time
 import wave
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -10,12 +11,12 @@ from elevenlabs import stream as play_stream
 from elevenlabs.client import ElevenLabs
 from elevenlabs.core import ApiError
 from elevenlabs.text_to_speech.types import TextToSpeechStreamRequestOutputFormat
-from elevenlabs.speech_to_speech.types import SpeechToSpeechStreamRequestOutputFormat
 from elevenlabs.types import (
     MultichannelSpeechToTextResponseModel,
     SpeechToTextChunkResponseModel,
     SpeechToTextWebhookResponseModel,
 )
+from gemini_client import get_trip_response
 
 try:
     import sounddevice as sd
@@ -30,10 +31,9 @@ DEFAULT_STT_MODEL = "scribe_v1"
 DEFAULT_TTS_MODEL = "eleven_turbo_v2_5"
 DEFAULT_VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Rachel
 DEFAULT_STREAM_FORMAT: TextToSpeechStreamRequestOutputFormat = "mp3_44100_128"
-DEFAULT_S2S_STREAM_FORMAT: SpeechToSpeechStreamRequestOutputFormat = "mp3_44100_128"
-DEFAULT_S2S_MODEL = "eleven_multilingual_sts_v2"
 LISTEN_SAMPLE_RATE = 16_000
 LISTEN_CHANNELS = 1
+CONVERSATION_LOG = Path("conversation_log.txt")
 
 
 def _resolve_api_key() -> str:
@@ -179,20 +179,20 @@ def capture_and_forward(
     duration_seconds: float = 6.0,
     *,
     transcribe: bool = True,
-    response_mode: str = "tts",
-) -> str:
+) -> tuple[str, str]:
     """
-    Record the user, optionally transcribe, then respond via ElevenLabs TTS or Speech-to-Speech.
+    Record the user, persist the transcript, query Gemini, and respond via ElevenLabs TTS.
     """
-    transcript, audio_bytes = capture_user_input(duration_seconds=duration_seconds, transcribe=transcribe)
+    transcript, _ = capture_user_input(duration_seconds=duration_seconds, transcribe=transcribe)
+    if not transcript:
+        raise RuntimeError("Transcription failed, cannot continue the Gemini → ElevenLabs pipeline.")
 
-    if response_mode == "speech_to_speech":
-        convert_speech_to_speech(audio_bytes, playback=True)
-    else:
-        reply = transcript if transcript else "I heard you loud and clear! Next, tell me how you want this trip to feel."
-        send_text_to_elevenlabs(reply, playback=True)
+    log_conversation("user", transcript)
+    assistant_reply = get_trip_response(transcript)
+    log_conversation("assistant", assistant_reply)
 
-    return transcript or ""
+    send_text_to_elevenlabs(assistant_reply, playback=True)
+    return transcript, assistant_reply
 
 
 def playback_recording(
@@ -231,6 +231,17 @@ def record_and_playback(
     return destination
 
 
+def log_conversation(role: str, text: str, *, log_path: Path = CONVERSATION_LOG) -> Path:
+    """
+    Append a timestamped entry to the conversation log.
+    """
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.utcnow().isoformat()
+    with log_path.open("a", encoding="utf-8") as handle:
+        handle.write(f"{timestamp} | {role.upper()} | {text.strip()}\n")
+    return log_path
+
+
 def _is_missing_permission_error(error: ApiError, permission: str) -> bool:
     detail = getattr(error, "body", {}).get("detail", {})
     message = detail.get("message", "")
@@ -238,37 +249,7 @@ def _is_missing_permission_error(error: ApiError, permission: str) -> bool:
     return status == "missing_permissions" and permission in message
 
 
-def convert_speech_to_speech(
-    audio_bytes: bytes,
-    *,
-    voice_id: str = DEFAULT_VOICE_ID,
-    model_id: str = DEFAULT_S2S_MODEL,
-    output_format: SpeechToSpeechStreamRequestOutputFormat = DEFAULT_S2S_STREAM_FORMAT,
-    playback: bool = True,
-    save_to: Optional[Path | str] = None,
-) -> Optional[Path]:
-    """
-    Send recorded audio to the ElevenLabs Speech-to-Speech API and optionally stream/save the converted audio.
-    """
-    audio_stream = elevenlabs.speech_to_speech.stream(
-        voice_id,
-        audio=("user_prompt.wav", audio_bytes, "audio/wav"),
-        model_id=model_id,
-        output_format=output_format,
-    )
-
-    if playback:
-        output_audio = play_stream(audio_stream)
-    else:
-        output_audio = b"".join(chunk for chunk in audio_stream if isinstance(chunk, bytes))
-
-    if save_to:
-        destination = Path(save_to)
-        destination.write_bytes(output_audio)
-        return destination
-    return None
-
-
 if __name__ == "__main__":
-    text = capture_and_forward(transcribe=True, response_mode="speech_to_speech")
-    print(f"Captured transcript: {text}")
+    user_text, assistant_text = capture_and_forward(transcribe=True)
+    print(f"Transcript: {user_text}")
+    print(f"Assistant reply: {assistant_text}")
