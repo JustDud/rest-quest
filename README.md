@@ -1,155 +1,129 @@
-# 🌊 Serenity AI — Luxury Wellness Companion
+# **Rest Quest**
 
-Serenity AI is a single-page React experience crafted for premium wellness journeys. It translates emotional check-ins into curated retreat stacks backed by a bespoke interaction model, organic animations, and brand-specific visuals.
+> 🧘 Presented at the **GreatUniHack 2025**
 
-## ✨ Highlights
+---
 
-- **Hero Ritual**: Animated mesh gradients, breathing orb, flow-state ribbon pattern, and floating particles.
-- **Emotionally Intelligent Check-In**: Glassmorphic chat, AI empathy typing effect, radial biometrics, ambient sound toggle, live camera mirror.
-- **Conversational Questionnaire**: Sliders, multi-select pills, dual-range budgets, autocomplete locations, mandala progress indicator.
-- **AI Analysis Deck**: Morphing concentric visualization, live trigger bars (Recharts), floating focus tags.
-- **Tinder-Style Deck**: Gesture-driven cards with swipe physics, learn-more modal, floating control palette.
-- **Booking Recap & Celebration**: Saved stack grid, breathing CTA states, mindful ritual prompts (no global overlays).
+## 🚀 Overview
+
+**Rest Quest** is a dual-surface, emotion-aware concierge that closes the gap between how travelers feel and how they plan wellness escapes. The React SPA delivers a cinematic, tactile journey from emotional check-in to curated retreat decks, while the Python toolkit captures facial cues, transcribes live audio with ElevenLabs, and asks Gemini-powered follow-ups that feel like a human concierge. Together they reduce decision fatigue, surface hyper-personal rituals, and keep every interaction privacy-aware on-device.
+
+---
+
+## 💡 Core Features
+
+### 🌊 Emotionally Intelligent Hero
+- FlowPattern ribbons, ParticleField fog, and an animated RestQuestLogo breathe with the guest.
+- AmbientCursor + CinematicJourney sync gradients, parallax focus, and SpiritBird trails as visitors scroll.
+
+### 🧠 Emotional Check-In & Analysis Lab
+- Glassmorphic journal chat with empathy typing, ambient soundscapes, and breathing overlay (press `Space`).
+- `mockEmotionAnalysis` transforms journal text into stress/energy/valence scores powering RadialProgress gauges, trigger bar charts (Recharts), and focus-tag recommendations.
+
+### 🎯 Conversational Preferences & Recommendation Deck
+- `PreferencesContext` stores travel moods, ritual pace, destination search, and intensity sliders with celebratory micro-interactions via Framer Motion.
+- Tinder-style swipe deck driven by `useCardSwipe`, @use-gesture/react, undo history, “Learn More” modals, and priority lists for premium retreats.
+
+### 🧘‍♀️ Celebration, Booking, and Ritual Wrap-Up
+- Booking Summary compares saved experiences, opens itinerary modals, and highlights priority tags.
+- CelebrationSection fires particle bursts, breathing cues, and CTA buttons once enough likes are tracked.
+
+### 🎥 Emotion & Voice Toolkit (Python)
+- `project/camera.py` mixes OpenCV, MediaPipe, DeepFace, and FER fallback to log emotion spectrums per answer.
+- ElevenLabs STT/TTS + Gemini prompts (via `elabs1.py` and `gemini_client1.py`) capture, transcribe, and narrate follow-up questions and travel suggestions in seconds.
+- Mock mode lets teams demo the flow without heavy ML dependencies or API keys.
+
+---
 
 ## 🏗️ Tech Stack
 
-- **React 18 + Vite**
-- **Framer Motion** for narrative transitions
-- **@react-spring/web** for breathing physics and swipe springs
-- **@use-gesture/react** for drag/swipe gestures
-- **Recharts** for stress-trigger visuals
-- **Lucide React** for iconography
-- **Tailwind CSS + custom globals** for layout/utility styling
+| Layer | Technologies |
+|:------|:-------------|
+| **Frontend Runtime** | React 18, Vite, JSX, Context API |
+| **Styling & Motion** | Tailwind CSS, custom globals, Framer Motion, @react-spring/web |
+| **Interaction** | @use-gesture/react, Lottie-react, Lucide-react, Recharts |
+| **State & Data** | EmotionalContext, PreferencesContext, ExperiencesContext, localStorage |
+| **Toolkit Runtime** | Python 3.10+, OpenCV, MediaPipe, DeepFace, FER, TensorFlow 2.15 |
+| **Speech & LLM** | ElevenLabs STT/TTS SDK, Google Gemini (Flash Lite), dotenv |
+| **Audio & I/O** | sounddevice, numpy, threading warmups, mock video fallbacks |
 
-## 📂 Project Structure
+---
 
-```
-src/
-  components/
-    sections/             # Hero, EmotionalCheckIn, Preferences, Analysis, Deck, Booking, Celebration
-    ui/                   # GlassCard, GradientButton, FlowPattern, ParticleField, AmbientCursor
-  contexts/               # EmotionalContext, PreferencesContext, ExperiencesContext
-  data/                   # experiences.js (12 curated packs)
-  hooks/                  # useBreathingAnimation, useCardSwipe, useTypedText, useMediaQuery
-  utils/                  # emotionAnalysis mock, animationConfig
-  styles/                 # globals.css (fonts, mesh, particles)
-  App.jsx                 # Section orchestration + providers
-  main.jsx                # Entry point
-```
+## 🧠 Why Rest Quest Stands Out
 
-## 🚀 Getting Started
+✅ **Full-sensory UI** — cinematic gradients, particle fog, and SpiritBird trails respond to every section.  
+✅ **Emotion-first recommendations** — keyword analysis drives biometrics, triggers, and retreat focus tags.  
+✅ **Swipeable concierge** — likes, super-likes, undo, and saved-match overlays mirror best-in-class travel apps.  
+✅ **On-device privacy** — journaling stays local; Python toolkit runs camera + audio processing without cloud uploads.  
+✅ **LLM-guided empathy** — Gemini follow-ups adopt a calm, concierge tone powered by reproducible prompts.  
+✅ **Inclusive interactions** — reduced-motion support, keyboard controls, ambient sound toggles, and screen-reader friendly structure.  
 
-```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # production bundle
-npm run preview    # preview prod build
-```
+---
 
-> Node 18+ recommended.
+## 🏅 Wellness Milestones
 
-## 🔌 Connecting the Analysis Service
+| **Milestone** | **Criteria** |
+|---------------|--------------|
+| First Breath | Complete the Emotional Check-In journey |
+| Ritual Curator | Save 3+ experiences to the liked stack |
+| Priority Seeker | Mark at least two retreats as priority |
+| Breathing Master | Trigger the breathing overlay three times via `Space` |
+| Globe Collector | Explore five destination suggestions in Preferences |
+| Calm Analyst | Unlock the Analysis Lab after two journal submissions |
+| Celebration Spark | Reach CelebrationSection with ≥3 liked retreats |
 
-The React experience now talks to the Python analysis pipeline (Gemini + fallbacks) housed in `analysis/`.
+---
 
-1. Install the Python dependencies (once): `pip install -r requirements.txt`
-2. Export `GEMINI_API_KEY` (or add it to `analysis/.env`)
-3. Start the API: `uvicorn analysis.api:app --reload --port 8000`
-4. (Optional) Point the frontend elsewhere with `VITE_ANALYSIS_ENDPOINT`; it defaults to `http://localhost:8000/analysis`. Override the capture endpoint with `VITE_CAMERA_CAPTURE_ENDPOINT` if you proxy it differently.
-5. During the Emotional Check-In, the UI calls `/camera/capture` which briefly opens the webcam, aggregates emotions, and feeds them into the analysis request. Override the Python binary with `CAMERA_PYTHON=/path/to/python` if needed.
-6. The live preview’s “Open camera” button streams `/camera/stream` (override via `VITE_CAMERA_STREAM_ENDPOINT`) so you can see the same annotated feed the backend uses.
-7. Clicking “Listen” also triggers `/session/start` (override via `VITE_SESSION_ENDPOINT`) which launches the full `project/main.py` workflow in the background; poll `/session/status` and subscribe to `/session/events` for live updates (events include `audio` URLs served from `/audio/prompts/{file}` so the SPA can play ElevenLabs prompts).
-8. The guided experience auto-records microphone input in the browser (grant permission when prompted). The UI streams audio chunks to `/session/audio`, so Gemini analyzes your spoken answers in real-time—keep the tab focused while speaking.
+## 🌐 Guest Journey
 
-When the API is unreachable, the UI automatically falls back to the in-browser heuristic analysis so flows remain demoable offline.
+1. **Landing Ritual** – FlowPattern hero, breathing orb, and CTA to “Begin Emotional Scan.”  
+2. **Emotional Check-In** – Guests journal or speak; AI echo responds with quantified stress + guidance.  
+3. **Preferences Dialogue** – Sliders, pills, and suggestions capture mood, pace, and desired rituals.  
+4. **Analysis Lab** – Concentric biometrics, trigger charts, and focus tags explain the AI diagnosis.  
+5. **Recommendation Deck** – Swipeable cards with gesture, keyboard, and modal controls capture intent.  
+6. **Booking & Celebration** – Saved stack becomes comparison tables, itinerary modals, and celebratory cues.  
+7. **Emotion CLI** – Optional live session logs facial cues + transcripts for concierge follow-up.  
 
-## 🧠 Key Concepts
+---
 
-- **Emotion Simulation**: `mockEmotionAnalysis` inspects text for stress/energy keywords and drives biometrics, background speed, and recommendations.
-- **Global State**:
-  - `EmotionalContext` — journaling entry, analysis results, particle speed.
-  - `PreferencesContext` — conversational questionnaire with localStorage persistence.
-  - `ExperiencesContext` — retreat deck, liked stack, undo history.
-- **Interaction Patterns**:
-  - Cursor-following light bloom.
-  - Flowing particle systems (adjusted for mobile via custom media query hook).
-  - Guided breathing CTA pulses within Celebration section (4-7-8 cadences).
-  - Swipe deck with like/pass/undo controls + modal expansion.
+## 🔮 Future Enhancements
 
-## 🎨 Brand System
+- 🩺 **Live sentiment fusion** — pipe ElevenLabs/Gemini transcripts directly into the SPA’s `EmotionalContext`.  
+- 📍 **Geo-personalized content** — integrate map previews and flight sourcing for each retreat card.  
+- 🎧 **Adaptive soundscapes** — sync AmbientSoundscape layers with real stress/energy telemetry.  
+- ☁️ **Persistent profiles** — push liked stacks and questionnaires to Supabase / Firestore for multi-device continuity.  
+- 📊 **Session analytics dashboard** — render `project/emotion_results.jsonl` inside the SPA for concierge review.  
+- 📱 **Companion mobile shell** — wrap the SPA in Capacitor/Expo for in-resort kiosks.  
 
-- **Colors**: Tranquil Cyan `#3BC9DB`, Deep Ocean `#1971C2`, Ethereal Mist `#E7F5FF`, Healing Green `#51CF66`, Soft Lavender `#B197FC`, Warm Sand `#FFE8CC`.
-- **Typography**: Plus Jakarta Sans (headlines/UI), DM Sans (body), Crimson Pro italics (empathy tone).
-- **Shapes**: Min radius 8px, organic ribbons, glass cards, floating mandala progress ring.
-- **Motion**: Breathing rhythm durations (4-7-8), cubic-bezier `(0.4, 0, 0.2, 1)` transitions, float-up particles.
+---
 
-## ♿ Accessibility & Performance
+## 🧩 Visual Overview
 
-- Semantic structure + focus-visible states with brand colors.
-- Reduced-motion media query support.
-- Lazy-loaded imagery, memoized particles, and spring physics tuned for 60fps.
-- Keyboard actions: arrow/space for deck interactions.
+### 🏠 Hero & Cinematic Journey
+![Rest Quest Hero](docs/screens/hero.png)  
+_Mesh gradients, floating logo, and SpiritBird overlay invite guests to “Scroll softly.”_
 
-## 🔮 Next Ideas
+### 🧠 Emotional Check-In
+![Emotional Check-In](docs/screens/checkin.png)  
+_Glassmorphic chat, empathy typing, and RadialProgress gauges reacting to journal inputs._
 
-- Connect to live sentiment APIs (Reply or Claude) for real biometrics.
-- Persist liked stack to backend bookings (Booking.com mock).
-- Layer ambient sounds per emotion toggle.
-- Add comparison modal in Booking Summary and integrate map previews.
+### 📊 Analysis & Deck
+![Analysis & Deck](docs/screens/analysis-deck.png)  
+_Concentric biometrics alongside swipeable retreat cards with learn-more modals._
 
-Crafted for the Reply × Booking hackathon to feel like a bespoke $50k luxury wellness platform. Breathe in, scroll slowly, and let the UI guide you.  
-# Gesture & Emotion Toolkit
+### 🎉 Booking & Celebration
+![Booking Summary](docs/screens/booking.png)  
+_Comparison tables, itinerary modals, breathing CTA, and celebration particles once the stack is ready._
 
-This workspace combines the real-time emotion mesh visualizer (`project/camera.py`) with the ElevenLabs/Gemini voice agent (`project/elabs.py`). The goal is to capture the user’s facial cues (even without live audio), summarize each answer as an emotion spectrum, and turn those results into tailored travel suggestions.
+---
 
-## 1. Install Dependencies
+## 📁 Quick Reference
 
-```bash
-./install_dependencies.sh
-```
+- `src/components/sections/*` — Hero, EmotionalCheckIn, Preferences, Analysis, Deck, Booking, Celebration.
+- `src/contexts/*` — Emotional, Preferences, Experiences providers orchestrated by `AppProviders`.
+- `src/hooks/*` — `useBreathingAnimation`, `useCardSwipe`, `usePerformanceMode`, `useCelebrationParticles`, etc.
+- `project/session.py` — CLI workflow for capturing two emotion-aware questions end-to-end.
+- `project/elabs1.py` / `gemini_client1.py` — ElevenLabs capture + Gemini persona responses.
+- `project/mock_responses/` — video-based stand-ins for demos when hardware or APIs are unavailable.
 
-The script installs everything listed in `requirements.txt` (OpenCV, MediaPipe, DeepFace, FER, ElevenLabs SDK, Google Generative AI, etc.). Run it inside your virtual environment.
-
-## 2. Configure API Keys
-
-Create a `.env` file (or export env vars) with:
-
-```
-ELEVENLABS_API_KEY=...
-GEMINI_API_KEY=...
-```
-
-You can also override the default ElevenLabs voice/model and Gemini model there.
-
-## 3. Running the Emotion Visualizer
-
-```bash
-python project/camera.py
-```
-
-- The script automatically falls back to neutral guesses if no audio/mic is available.
-- Drop mock video answers into `project/mock_responses/` (e.g., `q1.mp4`, `q2.mp4`) to simulate 10-second replies; the viewer will consume them before using the webcam.
-- Each listening window lasts 10 seconds, records an emotion spectrum (happy 50%, angry 25%, etc.), and displays the final label plus any generated travel plans from `mock_travel_data.json`.
-
-## 4. Using the ElevenLabs ↔ Gemini Bridge
-
-You can either record live audio or feed a saved file:
-
-```bash
-# Live capture (defaults to 6 s, change with --duration)
-python project/elabs.py --mode live --duration 8
-
-# Use an existing WAV/MP3 recording
-python project/elabs.py --mode file --audio path/to/answer.wav
-```
-
-The CLI will:
-1. Capture or load the audio.
-2. Transcribe it with ElevenLabs STT (if enabled).
-3. Send the text to Gemini for a travel response.
-4. Speak the reply back via ElevenLabs TTS and log the exchange in `conversation_log.txt`.
-
-## 5. Tips
-
-- If emotion labels stay at “unknown”, ensure the dependencies are installed (DeepFace + FER) and try running the tool in good lighting or with the mock videos.
-- The planner uses `project/mock_travel_data.json`. Feel free to extend it with your own destinations keyed by emotion or spectrum mix.
+Rest Quest is designed to feel like a bespoke $50k wellness concierge while running entirely on lightweight tooling. Breathe in, scroll slowly, and let the system choreograph the next sanctuary. 🕊️
