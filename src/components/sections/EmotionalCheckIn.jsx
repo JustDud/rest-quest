@@ -1,5 +1,5 @@
 import React, { useContext, useMemo, useState } from 'react';
-import { Sparkles, MessageCircle, Send } from 'lucide-react';
+import { Sparkles, MessageCircle, Send, Mic, AlertCircle, Volume2 } from 'lucide-react';
 import { EmotionalContext, ANALYSIS_BASE_URL } from '../../contexts/EmotionalContext';
 import { GlassCard } from '../ui/GlassCard';
 import { ParticleField } from '../ui/ParticleField';
@@ -7,14 +7,21 @@ import { OrbParticles } from '../particles/OrbParticles';
 import { useTypedText } from '../../hooks/useTypedText';
 import { LiveEmotionVisual } from '../ui/LiveEmotionVisual';
 import { CameraPreview } from '../ui/CameraPreview';
+import { ConversationLog } from '../ui/ConversationLog';
 
 export function EmotionalCheckIn() {
   const {
     analyzeEntry,
     analysis,
-    startGuidedSession,
-    sessionStarting,
     liveEmotion,
+    sessionEvents,
+    sessionActive,
+    sessionError,
+    listeningForResponse,
+    currentQuestion,
+    micStatus,
+    audioNeedsInteraction,
+    requestSessionAudioPlayback,
   } = useContext(EmotionalContext);
   const [showChat, setShowChat] = useState(false);
   const [chatInput, setChatInput] = useState('');
@@ -26,6 +33,25 @@ export function EmotionalCheckIn() {
     24
   );
   const chatEndpoint = `${ANALYSIS_BASE_URL}/chat/respond`;
+  const sessionEmotion = liveEmotion ?? analysis;
+  const showLiveSession = sessionActive || sessionEvents.length > 0;
+  const micStatusLabelMap = {
+    recording: 'Recording your response…',
+    listening: 'Listening for your voice…',
+    blocked: 'Microphone permission needed',
+    error: 'Microphone unavailable',
+    idle: 'Microphone standing by',
+  };
+  const micStatusClassMap = {
+    recording: 'bg-[#d3f9d8] text-[#2b8a3e]',
+    listening: 'bg-[#e3fafc] text-[#0b7285]',
+    blocked: 'bg-[#fff3bf] text-[#e67700]',
+    error: 'bg-[#ffe3e3] text-[#c92a2a]',
+    idle: 'bg-[#edf2ff] text-[#364fc7]',
+  };
+  const micStatusLabel = micStatusLabelMap[micStatus] ?? micStatusLabelMap.idle;
+  const micStatusClass = micStatusClassMap[micStatus] ?? micStatusClassMap.idle;
+  const currentQuestionText = currentQuestion?.question?.trim();
 
   const orbColor = useMemo(() => {
     if (!analysis) return 'from-[#3BC9DB] to-[#B197FC]';
@@ -116,6 +142,8 @@ export function EmotionalCheckIn() {
     );
   };
 
+  const openChatPanel = () => setShowChat(true);
+
   const renderChatBody = () => {
     if (!chatMessages.length) {
       return (
@@ -150,18 +178,17 @@ export function EmotionalCheckIn() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
             <button
               type="button"
-              onClick={startGuidedSession}
-              disabled={sessionStarting}
-              className="flex-1 rounded-3xl border border-white/70 bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] px-6 py-5 text-white font-semibold serenity-interactive disabled:opacity-60"
+              onClick={openChatPanel}
+              className="flex-1 rounded-3xl border border-white/70 bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] px-6 py-5 text-white font-semibold serenity-interactive"
             >
               <div className="flex flex-col items-center gap-2">
                 <Sparkles size={22} />
-                <span>{sessionStarting ? 'Starting…' : 'Start live conversation'}</span>
+                <span>Start live conversation</span>
               </div>
             </button>
             <button
               type="button"
-              onClick={() => setShowChat(true)}
+              onClick={openChatPanel}
               className="flex-1 rounded-3xl border border-[#E7F5FF] bg-white px-6 py-5 text-[#0B1728] font-semibold serenity-interactive"
             >
               <div className="flex flex-col items-center gap-2">
@@ -170,7 +197,60 @@ export function EmotionalCheckIn() {
               </div>
             </button>
           </div>
-          <LiveEmotionVisual emotion={analysis} />
+          {sessionError && (
+            <div className="flex items-center gap-2 rounded-2xl border border-[#FFE3E3] bg-[#FFF5F5] px-4 py-3 text-sm text-[#C92A2A]">
+              <AlertCircle size={16} />
+              <span>{sessionError}</span>
+            </div>
+          )}
+          <LiveEmotionVisual emotion={sessionEmotion} />
+          {showLiveSession && (
+            <div className="grid gap-6 lg:grid-cols-2 text-left">
+              <div className="rounded-3xl bg-white/90 border border-[#E7F5FF] p-6 space-y-4">
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-[#1971C2]/80">
+                  <span>Live conversation</span>
+                  {sessionActive && (
+                    <span className="inline-flex items-center gap-2 text-[11px] font-semibold text-[#1098F7]">
+                      <span className="relative flex h-2 w-2">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#51CF66] opacity-75" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-[#51CF66]" />
+                      </span>
+                      Active
+                    </span>
+                  )}
+                </div>
+                {currentQuestionText && (
+                  <div className="rounded-2xl bg-[#F8F9FA] text-[#0B1728]/80 px-4 py-3 text-sm">
+                    {listeningForResponse ? 'Listening to: ' : 'Asked: '}
+                    <span className="font-medium text-[#0B1728]">{currentQuestionText}</span>
+                  </div>
+                )}
+                <ConversationLog events={sessionEvents} />
+                <div className="flex flex-wrap items-center gap-3 text-xs">
+                  <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 ${micStatusClass}`}>
+                    <Mic size={14} />
+                    {micStatusLabel}
+                  </span>
+                  {listeningForResponse && (
+                    <span className="text-[#0B1728]/60">Serenity is capturing your voice and expressions.</span>
+                  )}
+                  {audioNeedsInteraction && (
+                    <button
+                      type="button"
+                      onClick={requestSessionAudioPlayback}
+                      className="inline-flex items-center gap-2 rounded-full border border-[#1971C2]/30 bg-white px-3 py-1 text-[#1971C2] serenity-interactive"
+                    >
+                      <Volume2 size={14} />
+                      Enable Serenity audio
+                    </button>
+                  )}
+                </div>
+              </div>
+              <div className="rounded-3xl bg-white/60 border border-[#E7F5FF] p-4">
+                <CameraPreview desiredActive={sessionActive} />
+              </div>
+            </div>
+          )}
           {showChat && (
             <div className="text-left space-y-4">
               <div className="rounded-3xl bg-white/90 border border-[#E7F5FF] p-6 space-y-4">
@@ -200,9 +280,11 @@ export function EmotionalCheckIn() {
                   </button>
                 </div>
               </div>
-              <div className="rounded-3xl bg-white/60 border border-[#E7F5FF] p-4">
-                <CameraPreview />
-              </div>
+              {!showLiveSession && (
+                <div className="rounded-3xl bg-white/60 border border-[#E7F5FF] p-4">
+                  <CameraPreview />
+                </div>
+              )}
             </div>
           )}
         </GlassCard>

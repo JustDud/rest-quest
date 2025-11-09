@@ -14,7 +14,7 @@ const ORIGIN = deriveOrigin();
 const CAMERA_STREAM_ENDPOINT =
   import.meta.env.VITE_CAMERA_STREAM_ENDPOINT || `${ORIGIN}/camera/stream`;
 
-export function CameraPreview() {
+export function CameraPreview({ desiredActive = null } = {}) {
   const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -36,6 +36,15 @@ export function CameraPreview() {
   }, []);
 
   useEffect(() => stopStream, [stopStream]);
+
+  useEffect(() => {
+    if (desiredActive === null) return;
+    if (desiredActive && !active && !loading) {
+      startStream();
+    } else if (!desiredActive && active) {
+      stopStream();
+    }
+  }, [desiredActive, active, loading, startStream, stopStream]);
 
   const handleToggle = () => {
     if (active) {
