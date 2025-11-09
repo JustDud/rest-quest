@@ -16,12 +16,18 @@ export const ANALYSIS_BASE_URL = ANALYSIS_ORIGIN;
 
 const CAMERA_CAPTURE_ENDPOINT =
   import.meta.env.VITE_CAMERA_CAPTURE_ENDPOINT || `${ANALYSIS_ORIGIN}/camera/capture`;
+const CAMERA_START_ENDPOINT =
+  import.meta.env.VITE_CAMERA_START_ENDPOINT || `${ANALYSIS_ORIGIN}/camera/start`;
 
-const SESSION_START_ENDPOINT =
-  import.meta.env.VITE_SESSION_ENDPOINT || `${ANALYSIS_ORIGIN}/session/start`;
 const SESSION_EVENTS_ENDPOINT =
   import.meta.env.VITE_SESSION_EVENTS_ENDPOINT || `${ANALYSIS_ORIGIN}/session/events`;
 const AUDIO_BASE_URL = ANALYSIS_ORIGIN;
+const CONVERSATION_START_ENDPOINT =
+  import.meta.env.VITE_CONVERSATION_START_ENDPOINT || `${ANALYSIS_ORIGIN}/conversation/start`;
+const CONVERSATION_STATUS_ENDPOINT =
+  import.meta.env.VITE_CONVERSATION_STATUS_ENDPOINT || `${ANALYSIS_ORIGIN}/conversation/status`;
+const CONVERSATION_STOP_ENDPOINT =
+  import.meta.env.VITE_CONVERSATION_STOP_ENDPOINT || `${ANALYSIS_ORIGIN}/conversation/stop`;
 
 export const EmotionalContext = createContext(null);
 
@@ -33,7 +39,14 @@ export function EmotionalProvider({ children }) {
   const [sessionEvents, setSessionEvents] = useState([]);
   const [audioQueue, setAudioQueue] = useState([]);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [audioNeedsInteraction, setAudioNeedsInteraction] = useState(false);
+  const [audioRetryTick, setAudioRetryTick] = useState(0);
   const [sessionStarting, setSessionStarting] = useState(false);
+  const [sessionActive, setSessionActive] = useState(false);
+  const [sessionError, setSessionError] = useState('');
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [listeningForResponse, setListeningForResponse] = useState(false);
+  const [micStatus, setMicStatus] = useState('idle');
   const audioRef = useRef(typeof Audio !== 'undefined' ? new Audio() : null);
   const [liveEmotion, setLiveEmotion] = useState(null);
   const micRecorder = useMicrophoneRecorder({
@@ -47,8 +60,11 @@ export function EmotionalProvider({ children }) {
   }, [analysis]);
 
   useEffect(() => {
-    if (!SESSION_EVENTS_ENDPOINT) return;
+    if (!SESSION_EVENTS_ENDPOINT) return undefined;
     const source = new EventSource(SESSION_EVENTS_ENDPOINT);
+    source.onopen = () => {
+      setSessionError('');
+    };
     source.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
@@ -62,6 +78,28 @@ export function EmotionalProvider({ children }) {
             dominant: data.payload.entry.dominant,
             timestamp: data.timestamp,
           });
+          setListeningForResponse(false);
+          setCurrentQuestion(null);
+        }
+        if (data?.type === 'question_start') {
+          setCurrentQuestion({
+            index: data?.payload?.index ?? null,
+            question: data?.payload?.question ?? '',
+          });
+          setListeningForResponse(true);
+        }
+        if (data?.type === 'record_prompt') {
+          setListeningForResponse(true);
+        }
+        if (data?.type === 'record_timeout') {
+          setListeningForResponse(false);
+        }
+        if (data?.type === 'session_closed') {
+          setSessionActive(false);
+          setListeningForResponse(false);
+          setCurrentQuestion(null);
+        } else if (data?.type) {
+          setSessionActive(true);
         }
       } catch (error) {
         console.warn('Failed to parse session event', error);
@@ -69,9 +107,70 @@ export function EmotionalProvider({ children }) {
     };
     source.onerror = (error) => {
       console.warn('Session event stream error', error);
+      setSessionError('Live session link interrupted. Refresh or restart and try again.');
     };
     return () => {
       source.close();
+      setSessionActive(false);
+      setListeningForResponse(false);
+      setCurrentQuestion(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!CONVERSATION_STATUS_ENDPOINT) return undefined;
+    let cancelled = false;
+    let timeoutId;
+
+    const pollStatus = async () => {
+      if (cancelled) {
+        return;
+      }
+      try {
+        const response = await fetch(CONVERSATION_STATUS_ENDPOINT);
+        if (!response.ok) {
+          throw new Error(`Conversation status error: ${response.status}`);
+        }
+        const data = await response.json();
+        if (cancelled) return;
+        const running = Boolean(data?.running || data?.state === 'running');
+        setSessionActive(running);
+        if (!running) {
+          setListeningForResponse(false);
+          setCurrentQuestion(null);
+        }
+        if (data?.state === 'error' && data?.message) {
+          setSessionError((prev) => prev || data.message);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.warn('Conversation status poll failed', error);
+        }
+      } finally {
+        if (!cancelled) {
+          timeoutId = setTimeout(pollStatus, 4000);
+        }
+      }
+    };
+
+    pollStatus();
+    return () => {
+      cancelled = true;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const audioEl = audioRef.current;
+    if (!audioEl) return;
+    const handleEnded = () => setAudioPlaying(false);
+    audioEl.addEventListener('ended', handleEnded);
+    audioEl.addEventListener('error', handleEnded);
+    return () => {
+      audioEl.removeEventListener('ended', handleEnded);
+      audioEl.removeEventListener('error', handleEnded);
     };
   }, []);
 
@@ -81,21 +180,34 @@ export function EmotionalProvider({ children }) {
     if (audioPlaying) return;
     if (!audioQueue.length) return;
 
-    const [next, ...rest] = audioQueue;
-    setAudioQueue(rest);
-    setAudioPlaying(true);
-    audioEl.src = `${AUDIO_BASE_URL}${next}`;
-    audioEl.play().catch((error) => {
-      console.warn('Audio playback failed', error);
-      setAudioPlaying(false);
-    });
+    const nextPath = audioQueue[0];
+    const source = `${AUDIO_BASE_URL}${nextPath}`;
+    let cancelled = false;
 
-    const handleEnded = () => setAudioPlaying(false);
-    audioEl.addEventListener('ended', handleEnded, { once: true });
-    return () => {
-      audioEl.removeEventListener('ended', handleEnded);
+    const attemptPlayback = async () => {
+      try {
+        audioEl.src = source;
+        const playPromise = audioEl.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          await playPromise;
+        }
+        if (cancelled) return;
+        setAudioNeedsInteraction(false);
+        setAudioPlaying(true);
+        setAudioQueue((prev) => prev.slice(1));
+      } catch (error) {
+        if (cancelled) return;
+        console.warn('Audio playback failed', error);
+        setAudioNeedsInteraction(true);
+        setAudioPlaying(false);
+      }
     };
-  }, [audioQueue, audioPlaying]);
+
+    attemptPlayback();
+    return () => {
+      cancelled = true;
+    };
+  }, [audioQueue, audioPlaying, audioRetryTick]);
 
   const captureCameraEmotion = useCallback(async () => {
     try {
@@ -122,16 +234,82 @@ export function EmotionalProvider({ children }) {
     return null;
   }, []);
 
+  const requestSessionAudioPlayback = useCallback(() => {
+    setAudioNeedsInteraction(false);
+    setAudioRetryTick((tick) => tick + 1);
+  }, []);
+
+  const stopGuidedSession = useCallback(async () => {
+    try {
+      if (CONVERSATION_STOP_ENDPOINT) {
+        await fetch(CONVERSATION_STOP_ENDPOINT, { method: 'POST' });
+      }
+    } catch (error) {
+      console.warn('Unable to stop conversation cleanly', error);
+    } finally {
+      const audioEl = audioRef.current;
+      if (audioEl) {
+        audioEl.pause();
+        audioEl.currentTime = 0;
+      }
+      setAudioQueue([]);
+      setAudioPlaying(false);
+      setSessionActive(false);
+      setListeningForResponse(false);
+    }
+  }, []);
+
   const startGuidedSession = useCallback(async () => {
     if (sessionStarting) return;
     setSessionStarting(true);
+    setSessionError('');
     try {
-      const response = await fetch(SESSION_START_ENDPOINT, { method: 'POST' });
-      if (!response.ok && response.status !== 409) {
-        throw new Error(`Session start failed: ${response.status}`);
+      if (CAMERA_START_ENDPOINT) {
+        const cameraResponse = await fetch(CAMERA_START_ENDPOINT, { method: 'POST' });
+        if (!cameraResponse.ok) {
+          let cameraDetail = '';
+          try {
+            const payload = await cameraResponse.json();
+            cameraDetail = payload?.detail || payload?.status || '';
+          } catch {
+            cameraDetail = '';
+          }
+          throw new Error(cameraDetail || `Camera start failed (${cameraResponse.status})`);
+        }
       }
+
+      if (!CONVERSATION_START_ENDPOINT) {
+        throw new Error('Conversation start endpoint is not configured.');
+      }
+
+      const response = await fetch(CONVERSATION_START_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ turns: 2 }),
+      });
+      if (!response.ok && response.status !== 409) {
+        let detail = '';
+        try {
+          const payload = await response.json();
+          detail = payload?.detail || '';
+        } catch {
+          detail = '';
+        }
+        throw new Error(detail || `Live conversation failed to start: ${response.status}`);
+      }
+
+      setSessionEvents([]);
+      setAudioQueue([]);
+      setLiveEmotion(null);
+      setCurrentQuestion(null);
+      setListeningForResponse(true);
+      setSessionActive(true);
     } catch (error) {
-      console.warn('Full-session runner unavailable', error);
+      console.warn('Live conversation start failed', error);
+      setSessionActive(false);
+      setSessionError(
+        error instanceof Error ? error.message : 'Unable to start the live conversation. Please try again.'
+      );
     } finally {
       setSessionStarting(false);
     }
@@ -194,7 +372,11 @@ export function EmotionalProvider({ children }) {
       if (!micRecorder.recording) {
         micRecorder.startRecording?.();
       }
-    } else if (latest.type === 'record_timeout' || latest.type === 'question_complete') {
+    } else if (
+      latest.type === 'record_timeout' ||
+      latest.type === 'question_complete' ||
+      latest.type === 'session_closed'
+    ) {
       if (micRecorder.recording) {
         micRecorder.stopRecording?.();
       }
@@ -202,10 +384,26 @@ export function EmotionalProvider({ children }) {
   }, [sessionEvents, micRecorder]);
 
   useEffect(() => {
-    if (micRecorder?.error) {
-      console.warn(micRecorder.error);
+    if (!micRecorder) return;
+    const { error, permissionGranted, recording } = micRecorder;
+    if (error) {
+      console.warn(error);
+      setSessionError((prev) => prev || error);
+      setMicStatus('error');
+      return;
     }
-  }, [micRecorder?.error]);
+    if (!permissionGranted) {
+      setMicStatus('blocked');
+      return;
+    }
+    if (recording) {
+      setMicStatus('recording');
+    } else if (listeningForResponse) {
+      setMicStatus('listening');
+    } else {
+      setMicStatus('idle');
+    }
+  }, [micRecorder?.error, micRecorder?.permissionGranted, micRecorder?.recording, listeningForResponse, micRecorder]);
 
   const value = useMemo(
     () => ({
@@ -216,9 +414,17 @@ export function EmotionalProvider({ children }) {
       analyzeEntry,
       particleSpeed,
       sessionEvents,
+      sessionActive,
+      sessionError,
+      currentQuestion,
+      listeningForResponse,
       startGuidedSession,
+      stopGuidedSession,
       sessionStarting,
       micRecorder,
+      micStatus,
+      audioNeedsInteraction,
+      requestSessionAudioPlayback,
       liveEmotion,
     }),
     [
@@ -228,9 +434,17 @@ export function EmotionalProvider({ children }) {
       analyzeEntry,
       particleSpeed,
       sessionEvents,
+      sessionActive,
+      sessionError,
+      currentQuestion,
+      listeningForResponse,
       startGuidedSession,
+      stopGuidedSession,
       sessionStarting,
       micRecorder,
+      micStatus,
+      audioNeedsInteraction,
+      requestSessionAudioPlayback,
       liveEmotion,
     ]
   );

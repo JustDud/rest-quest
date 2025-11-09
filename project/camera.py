@@ -80,6 +80,8 @@
 
 
 
+import os
+
 import cv2
 import mediapipe as mp
 # DeepFace is an optional heavy dependency. Import lazily when needed to avoid
@@ -92,6 +94,8 @@ import textwrap
 import json
 from pathlib import Path
 from collections import deque
+
+SHOW_PREVIEW_WINDOW = os.getenv("CAMERA_SHOW_WINDOW", "0") == "1"
 
 try:
     from fer import FER
@@ -1214,15 +1218,17 @@ def run_visualizer():
 
             frame = draw_conversation_overlay(frame, conversation, travel_planner, external_models)
 
-            cv2.imshow("Emotion Scan Visualizer", frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            if SHOW_PREVIEW_WINDOW:
+                cv2.imshow("Emotion Scan Visualizer", frame)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
 
             if finalize_due:
                 finalize_current_answer()
 
     stream_manager.release()
-    cv2.destroyAllWindows()
+    if SHOW_PREVIEW_WINDOW:
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":

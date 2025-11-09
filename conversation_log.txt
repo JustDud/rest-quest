@@ -1,31 +1,5 @@
-2025-11-08T22:21:14.607686+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T22:21:26.865696+00:00 | USER | Hello, Mr. Twister. Vlasik! Ой! Оно залагало нас.
-2025-11-08T22:21:27.673833+00:00 | ASSISTANT | Were you experiencing technical difficulties? If so, would you like help troubleshooting the issue?
-2025-11-08T22:21:36.894593+00:00 | USER | A person knew she was.
-2025-11-08T22:21:36.895706+00:00 | ASSISTANT | Thanks for your responses
-2025-11-08T22:22:59.432719+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T22:23:08.976422+00:00 | USER | One, two, three, four, five.
-2025-11-08T22:23:21.393652+00:00 | ASSISTANT | Okay.
-
-How would you describe the experience you just had?
-2025-11-08T22:27:28.525931+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T22:28:53.677070+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T22:29:10.848753+00:00 | USER | It was really, really awesome. I am very, very excited. I want to go walking.
-2025-11-08T22:29:19.242021+00:00 | ASSISTANT | Great! I'm so happy to hear you're excited!
-
-What kind of walking experience are you envisioning: a relaxing stroll or something more challenging?
-2025-11-08T22:29:59.996215+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T22:30:21.699241+00:00 | USER | It's actually running through the-- Now it's listening, and it will give a feedback, but every time it fe-
-2025-11-08T22:30:27.120755+00:00 | ASSISTANT | Were you saying that you're feeling frustrated with technology, or something else?
-2025-11-08T23:09:14.217966+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-08T23:09:30.704408+00:00 | USER | Four, five, six, seven. Bing, bing, bing.
-2025-11-08T23:09:31.381881+00:00 | ASSISTANT | Did you want to share more about how you're feeling before we plan your trip?
-2025-11-08T23:09:46.266195+00:00 | USER | Which has given me a nice hike.
-2025-11-08T23:09:46.267436+00:00 | ASSISTANT | Thanks for your responses
-2025-11-09T00:18:32.689949+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-09T00:21:27.536020+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-09T00:21:49.949757+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-09T00:24:56.674730+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-09T00:29:44.867136+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-09T00:55:57.792431+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
-2025-11-09T00:58:31.714779+00:00 | ASSISTANT | Hi! I'm your mindful travel companion. Tell me how you feel right now and what vibe you hope your next trip brings.
+2025-11-09T10:17:49.980951+00:00 | ASSISTANT | Hi — I’ll ask two quick questions about how you're doing. Please reply when ready.
+2025-11-09T10:18:06.010188+00:00 | USER | (speaks Russian)
+2025-11-09T10:18:07.101894+00:00 | ASSISTANT | Do you mean you'd like me to repeat the questions in Russian, or that you're just not ready to answer yet? When you're ready, perhaps a short walk or a cup of tea might help you feel more comfortable.
+2025-11-09T10:18:27.390432+00:00 | USER | (footsteps) (background noise)
+2025-11-09T10:18:28.295889+00:00 | ASSISTANT | It sounds like you're on the move, so perhaps you could enjoy a little people-watching or a few moments of nature observation along the way.
