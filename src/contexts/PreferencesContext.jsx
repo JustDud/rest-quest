@@ -25,14 +25,62 @@ export function PreferencesProvider({ children }) {
       return defaultState;
     }
   });
+  const [lockedPreferences, setLockedPreferences] = useState({});
+
+  const valuesEqual = useCallback((left, right) => {
+    if (Array.isArray(left) && Array.isArray(right)) {
+      if (left.length !== right.length) return false;
+      return left.every((value, index) => value === right[index]);
+    }
+    return left === right;
+  }, []);
 
   useEffect(() => {
     if (typeof window === 'undefined') return undefined;
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
   }, [preferences]);
 
-  const updatePreference = useCallback((key, value) => {
-    setPreferences((prev) => ({ ...prev, [key]: value }));
+  const updatePreference = useCallback(
+    (key, value, options = {}) => {
+      const source = options.source ?? 'user';
+      setPreferences((prev) => {
+        if (valuesEqual(prev[key], value)) {
+          return prev;
+        }
+        return { ...prev, [key]: value };
+      });
+      if (source === 'user') {
+        setLockedPreferences((prev) => {
+          if (prev[key]) return prev;
+          return { ...prev, [key]: true };
+        });
+      }
+    },
+    [valuesEqual]
+  );
+
+  const autoUpdatePreference = useCallback(
+    (key, value) => {
+      setPreferences((prev) => {
+        if (lockedPreferences[key]) {
+          return prev;
+        }
+        if (valuesEqual(prev[key], value)) {
+          return prev;
+        }
+        return { ...prev, [key]: value };
+      });
+    },
+    [lockedPreferences, valuesEqual]
+  );
+
+  const unlockPreference = useCallback((key) => {
+    setLockedPreferences((prev) => {
+      if (!prev[key]) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
   }, []);
 
   const toggleExperience = useCallback((value) => {
@@ -43,15 +91,19 @@ export function PreferencesProvider({ children }) {
         : [...prev.experiences, value];
       return { ...prev, experiences };
     });
+    setLockedPreferences((prev) => (prev.experiences ? prev : { ...prev, experiences: true }));
   }, []);
 
   const value = useMemo(
     () => ({
       preferences,
       updatePreference,
+      autoUpdatePreference,
+      unlockPreference,
+      lockedPreferences,
       toggleExperience,
     }),
-    [preferences, updatePreference, toggleExperience]
+    [preferences, updatePreference, autoUpdatePreference, unlockPreference, lockedPreferences, toggleExperience]
   );
 
   return <PreferencesContext.Provider value={value}>{children}</PreferencesContext.Provider>;

@@ -17,9 +17,9 @@ from fastapi.responses import StreamingResponse, FileResponse
 from pydantic import BaseModel, Field
 
 try:  # pragma: no cover - optional relative import support
-    from .service import generate_analysis, load_mock_request
+    from .service import generate_analysis, load_mock_request, generate_chat_reply
 except ImportError:  # pragma: no cover
-    from service import generate_analysis, load_mock_request  # type: ignore
+    from service import generate_analysis, load_mock_request, generate_chat_reply  # type: ignore
 
 
 class VisualEmotionEntry(BaseModel):
@@ -34,6 +34,18 @@ class AnalysisRequest(BaseModel):
     voiceTranscript: Optional[str] = None
     visualEmotionTranscript: List[VisualEmotionEntry] = Field(default_factory=list)
     useMock: bool = False
+    allowGemini: bool = True
+
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    message: str
+    history: List[ChatMessage] = Field(default_factory=list)
+    emotionContext: Optional[Dict[str, Any]] = None
     allowGemini: bool = True
 
 
@@ -281,6 +293,26 @@ async def create_analysis(payload: AnalysisRequest) -> Dict[str, Any]:
     request_dict = _build_request(payload)
     try:
         return generate_analysis(request_dict, entry=payload.entry, allow_gemini=payload.allowGemini)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.post("/chat/respond")
+async def chat_respond(payload: ChatRequest) -> Dict[str, Any]:
+    try:
+        history_payload = [{"role": msg.role, "content": msg.content} for msg in payload.history]
+        return generate_chat_reply(
+            payload.message,
+            history=history_payload,
+            context=payload.emotionContext,
+            allow_gemini=payload.allowGemini,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=500, detail=str(exc)) from exc
 

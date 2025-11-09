@@ -33,6 +33,12 @@ LOW_STRESS = ["calm", "peaceful", "relaxed", "rested", "content"]
 HIGH_ENERGY = ["energetic", "active", "excited", "motivated", "ready"]
 LOW_ENERGY = ["tired", "exhausted", "drained", "fatigued", "sleepy"]
 TRIGGER_KEYWORDS = ["work", "deadline", "deadlines", "relationships", "family", "travel", "money", "health"]
+CHAT_STYLE_PROMPT = """You are Serenity, a mindful travel concierge. Your job is to respond like a calm guide:
+- acknowledge feelings with grounded language
+- keep replies between 2-4 sentences
+- weave in subtle sensory imagery and somatic cues
+- invite gentle next steps rather than commands
+Avoid bullet lists. Keep tone empathetic, not clinical."""
 
 
 @dataclass
@@ -295,3 +301,100 @@ def generate_analysis(
         result["valence"] = raw["valence"]
 
     return result
+
+
+def _fallback_chat_reply(message: str, context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+    snippet = message.strip().split("\n")[0]
+    if len(snippet) > 180:
+        snippet = snippet[:177].rstrip() + "..."
+    stress_hint = context.get("stress") if isinstance(context, dict) else None
+    tone = "grounding" if stress_hint and stress_hint >= 70 else "gentle"
+    reply = (
+        f"I hear how much is wrapped up in \"{snippet}\". "
+        "Let’s take a breath together—notice your shoulders soften a touch. "
+        "If you’d like, we can sketch a few experiences that match the feeling you’re naming."
+    )
+    if tone == "grounding":
+        reply = (
+            "Thanks for trusting me with that. "
+            "Let’s pause for a long exhale and imagine cool air on your skin. "
+            "From there we can explore rituals that dial down the pressure while keeping you inspired."
+        )
+    return {"reply": reply, "source": "fallback"}
+
+
+def _build_chat_prompt(
+    message: str,
+    history: List[Dict[str, str]],
+    context: Optional[Dict[str, Any]] = None,
+) -> str:
+    lines = [CHAT_STYLE_PROMPT, "", "Conversation so far:"]
+    trimmed_history = history[-8:]
+    for entry in trimmed_history:
+        role = entry.get("role", "user").lower()
+        content = entry.get("content", "").strip()
+        if not content:
+            continue
+        prefix = "Traveler" if role == "user" else "Serenity"
+        lines.append(f"{prefix}: {content}")
+    lines.append(f"Traveler: {message.strip()}")
+    if context:
+        context_bits = []
+        for key in ("stress", "energy", "valence", "dominantEmotion"):
+            value = context.get(key)
+            if value is None:
+                continue
+            context_bits.append(f"{key}={value}")
+        if context_bits:
+            lines.append("")
+            lines.append(f"Emotional telemetry: {', '.join(context_bits)}")
+    lines.append("")
+    lines.append("Respond as Serenity:")
+    return "\n".join(lines)
+
+
+def generate_chat_reply(
+    message: str,
+    *,
+    history: Optional[List[Dict[str, str]]] = None,
+    context: Optional[Dict[str, Any]] = None,
+    allow_gemini: bool = True,
+) -> Dict[str, Any]:
+    if not message or not message.strip():
+        raise ValueError("Message is required for chat replies.")
+
+    cleaned_history = history or []
+    fallback = _fallback_chat_reply(message, context)
+    if not allow_gemini:
+        return fallback
+
+    client = _ensure_client()
+    if client is None:
+        return fallback
+
+    prompt = _build_chat_prompt(message, cleaned_history, context)
+    try:
+        response = client.models.generate_content(
+            model=os.getenv("GEMINI_CHAT_MODEL", os.getenv("GEMINI_MODEL", "gemini-2.0-flash")),
+            contents=prompt,
+            config={
+                "temperature": float(os.getenv("GEMINI_CHAT_TEMPERATURE", os.getenv("GEMINI_TEMPERATURE", "0.85"))),
+                "max_output_tokens": int(
+                    os.getenv("GEMINI_CHAT_MAX_OUTPUT", os.getenv("GEMINI_MAX_OUTPUT", "512"))
+                ),
+            },
+        )
+    except Exception:
+        return fallback
+
+    text = getattr(response, "text", None)
+    if not text:
+        return fallback
+    reply = text.strip()
+    if not reply:
+        return fallback
+
+    return {
+        "reply": reply,
+        "source": "gemini",
+    }

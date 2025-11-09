@@ -12,6 +12,7 @@ const ANALYSIS_ORIGIN = (() => {
     return 'http://localhost:8000';
   }
 })();
+export const ANALYSIS_BASE_URL = ANALYSIS_ORIGIN;
 
 const CAMERA_CAPTURE_ENDPOINT =
   import.meta.env.VITE_CAMERA_CAPTURE_ENDPOINT || `${ANALYSIS_ORIGIN}/camera/capture`;
