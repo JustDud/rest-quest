@@ -85,6 +85,17 @@ except Exception:  # noqa: BLE001
     subscribe_events = None  # type: ignore[assignment]
     unsubscribe_events = None  # type: ignore[assignment]
 
+try:  # pragma: no cover
+    from project.conversation_runner import (
+        get_conversation_status,
+        start_conversation,
+        request_stop as stop_conversation,
+    )
+except Exception:  # noqa: BLE001
+    get_conversation_status = None  # type: ignore[assignment]
+    start_conversation = None  # type: ignore[assignment]
+    stop_conversation = None  # type: ignore[assignment]
+
 _camera_process: Optional[subprocess.Popen] = None
 _camera_log_handle: Optional[IO[bytes]] = None
 _camera_lock = threading.Lock()
@@ -131,6 +142,10 @@ class CameraCaptureRequest(BaseModel):
     warmup: float = Field(default=1.5, ge=0.0, le=10.0)
     question: Optional[str] = None
     prompt: Optional[str] = None
+
+
+class ConversationStartRequest(BaseModel):
+    turns: int = Field(default=2, ge=1, le=6)
 
 
 def _camera_stack_available() -> bool:
@@ -370,6 +385,32 @@ async def camera_stream() -> StreamingResponse:
             _camera_lock.release()
 
     return StreamingResponse(_generator(), media_type="multipart/x-mixed-replace; boundary=frame")
+
+
+@app.post("/conversation/start")
+async def conversation_start(payload: ConversationStartRequest) -> Dict[str, Any]:
+    if not start_conversation:
+        raise HTTPException(status_code=503, detail="Conversation runner unavailable on this host.")
+    try:
+        start_conversation(turns=payload.turns)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+    return {"status": "started"}
+
+
+@app.get("/conversation/status")
+async def conversation_status() -> Dict[str, Any]:
+    if not get_conversation_status:
+        raise HTTPException(status_code=503, detail="Conversation runner unavailable on this host.")
+    return get_conversation_status()
+
+
+@app.post("/conversation/stop")
+async def conversation_stop() -> Dict[str, Any]:
+    if not stop_conversation:
+        raise HTTPException(status_code=503, detail="Conversation runner unavailable on this host.")
+    stop_conversation()
+    return {"status": "stopping"}
 
 
 @app.post("/session/start")

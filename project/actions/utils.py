@@ -6,7 +6,7 @@ import threading
 import time
 
 from elabs1 import send_text_to_elevenlabs
-from camera import EmotionVisualizer, cv2
+from camera import EmotionVisualizer, cv2, SHOW_PREVIEW_WINDOW
 
 try:  # optional dependency used only for model warmup
     import numpy as np
@@ -38,9 +38,12 @@ def speak_with_visualizer(
     while not done.is_set() and (time.time() - start) < timeout:
         try:
             frame, _ = visualizer.process_frame()
-            cv2.imshow(window_name, frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
+            if SHOW_PREVIEW_WINDOW:
+                cv2.imshow(window_name, frame)
+                if cv2.waitKey(1) & 0xFF == ord("q"):
+                    break
+            else:
+                time.sleep(0.02)
         except Exception:
             time.sleep(0.02)
 
@@ -63,8 +66,11 @@ def preload_analyzer(visualizer: EmotionVisualizer, *, window_name: str, timeout
     while (time.time() - start) < timeout and getattr(analyzer, "last_scores", None) is None:
         try:
             frame, _ = visualizer.process_frame()
-            cv2.imshow(window_name, frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
+            if SHOW_PREVIEW_WINDOW:
+                cv2.imshow(window_name, frame)
+                if cv2.waitKey(1) & 0xFF == ord("q"):
+                    break
+            else:
+                time.sleep(0.02)
         except Exception:
             time.sleep(0.02)

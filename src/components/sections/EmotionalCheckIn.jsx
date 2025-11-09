@@ -13,6 +13,9 @@ export function EmotionalCheckIn() {
   const {
     analyzeEntry,
     analysis,
+    startGuidedSession,
+    stopGuidedSession,
+    sessionStarting,
     liveEmotion,
     sessionEvents,
     sessionActive,
@@ -143,6 +146,13 @@ export function EmotionalCheckIn() {
   };
 
   const openChatPanel = () => setShowChat(true);
+  const handleStartLiveConversation = () => {
+    setShowChat(true);
+    startGuidedSession();
+  };
+  const handleStopLiveConversation = () => {
+    stopGuidedSession();
+  };
 
   const renderChatBody = () => {
     if (!chatMessages.length) {
@@ -178,14 +188,28 @@ export function EmotionalCheckIn() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
             <button
               type="button"
-              onClick={openChatPanel}
-              className="flex-1 rounded-3xl border border-white/70 bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] px-6 py-5 text-white font-semibold serenity-interactive"
+              onClick={handleStartLiveConversation}
+              disabled={sessionStarting || sessionActive}
+              className="flex-1 rounded-3xl border border-white/70 bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] px-6 py-5 text-white font-semibold serenity-interactive disabled:opacity-60"
             >
               <div className="flex flex-col items-center gap-2">
                 <Sparkles size={22} />
-                <span>Start live conversation</span>
+                <span>
+                  {sessionActive ? 'Session in progress' : sessionStarting ? 'Starting…' : 'Start live conversation'}
+                </span>
               </div>
             </button>
+            {sessionActive && (
+              <button
+                type="button"
+                onClick={handleStopLiveConversation}
+                className="flex-1 rounded-3xl border border-[#FFE3E3] bg-white px-6 py-5 text-[#C92A2A] font-semibold serenity-interactive"
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <span>Stop sound agent</span>
+                </div>
+              </button>
+            )}
             <button
               type="button"
               onClick={openChatPanel}

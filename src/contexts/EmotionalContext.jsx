@@ -19,11 +19,15 @@ const CAMERA_CAPTURE_ENDPOINT =
 const CAMERA_START_ENDPOINT =
   import.meta.env.VITE_CAMERA_START_ENDPOINT || `${ANALYSIS_ORIGIN}/camera/start`;
 
-const SESSION_START_ENDPOINT =
-  import.meta.env.VITE_SESSION_ENDPOINT || `${ANALYSIS_ORIGIN}/session/start`;
 const SESSION_EVENTS_ENDPOINT =
   import.meta.env.VITE_SESSION_EVENTS_ENDPOINT || `${ANALYSIS_ORIGIN}/session/events`;
 const AUDIO_BASE_URL = ANALYSIS_ORIGIN;
+const CONVERSATION_START_ENDPOINT =
+  import.meta.env.VITE_CONVERSATION_START_ENDPOINT || `${ANALYSIS_ORIGIN}/conversation/start`;
+const CONVERSATION_STATUS_ENDPOINT =
+  import.meta.env.VITE_CONVERSATION_STATUS_ENDPOINT || `${ANALYSIS_ORIGIN}/conversation/status`;
+const CONVERSATION_STOP_ENDPOINT =
+  import.meta.env.VITE_CONVERSATION_STOP_ENDPOINT || `${ANALYSIS_ORIGIN}/conversation/stop`;
 
 export const EmotionalContext = createContext(null);
 
@@ -114,6 +118,51 @@ export function EmotionalProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    if (!CONVERSATION_STATUS_ENDPOINT) return undefined;
+    let cancelled = false;
+    let timeoutId;
+
+    const pollStatus = async () => {
+      if (cancelled) {
+        return;
+      }
+      try {
+        const response = await fetch(CONVERSATION_STATUS_ENDPOINT);
+        if (!response.ok) {
+          throw new Error(`Conversation status error: ${response.status}`);
+        }
+        const data = await response.json();
+        if (cancelled) return;
+        const running = Boolean(data?.running || data?.state === 'running');
+        setSessionActive(running);
+        if (!running) {
+          setListeningForResponse(false);
+          setCurrentQuestion(null);
+        }
+        if (data?.state === 'error' && data?.message) {
+          setSessionError((prev) => prev || data.message);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          console.warn('Conversation status poll failed', error);
+        }
+      } finally {
+        if (!cancelled) {
+          timeoutId = setTimeout(pollStatus, 4000);
+        }
+      }
+    };
+
+    pollStatus();
+    return () => {
+      cancelled = true;
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const audioEl = audioRef.current;
     if (!audioEl) return;
     const handleEnded = () => setAudioPlaying(false);
@@ -190,6 +239,26 @@ export function EmotionalProvider({ children }) {
     setAudioRetryTick((tick) => tick + 1);
   }, []);
 
+  const stopGuidedSession = useCallback(async () => {
+    try {
+      if (CONVERSATION_STOP_ENDPOINT) {
+        await fetch(CONVERSATION_STOP_ENDPOINT, { method: 'POST' });
+      }
+    } catch (error) {
+      console.warn('Unable to stop conversation cleanly', error);
+    } finally {
+      const audioEl = audioRef.current;
+      if (audioEl) {
+        audioEl.pause();
+        audioEl.currentTime = 0;
+      }
+      setAudioQueue([]);
+      setAudioPlaying(false);
+      setSessionActive(false);
+      setListeningForResponse(false);
+    }
+  }, []);
+
   const startGuidedSession = useCallback(async () => {
     if (sessionStarting) return;
     setSessionStarting(true);
@@ -209,7 +278,15 @@ export function EmotionalProvider({ children }) {
         }
       }
 
-      const response = await fetch(SESSION_START_ENDPOINT, { method: 'POST' });
+      if (!CONVERSATION_START_ENDPOINT) {
+        throw new Error('Conversation start endpoint is not configured.');
+      }
+
+      const response = await fetch(CONVERSATION_START_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ turns: 2 }),
+      });
       if (!response.ok && response.status !== 409) {
         let detail = '';
         try {
@@ -218,17 +295,17 @@ export function EmotionalProvider({ children }) {
         } catch {
           detail = '';
         }
-        throw new Error(detail || `Session start failed: ${response.status}`);
+        throw new Error(detail || `Live conversation failed to start: ${response.status}`);
       }
 
       setSessionEvents([]);
       setAudioQueue([]);
       setLiveEmotion(null);
       setCurrentQuestion(null);
-      setListeningForResponse(false);
+      setListeningForResponse(true);
       setSessionActive(true);
     } catch (error) {
-      console.warn('Full-session runner unavailable', error);
+      console.warn('Live conversation start failed', error);
       setSessionActive(false);
       setSessionError(
         error instanceof Error ? error.message : 'Unable to start the live conversation. Please try again.'
@@ -342,6 +419,7 @@ export function EmotionalProvider({ children }) {
       currentQuestion,
       listeningForResponse,
       startGuidedSession,
+      stopGuidedSession,
       sessionStarting,
       micRecorder,
       micStatus,
@@ -361,6 +439,7 @@ export function EmotionalProvider({ children }) {
       currentQuestion,
       listeningForResponse,
       startGuidedSession,
+      stopGuidedSession,
       sessionStarting,
       micRecorder,
       micStatus,

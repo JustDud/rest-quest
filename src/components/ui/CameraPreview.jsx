@@ -20,6 +20,7 @@ export function CameraPreview({ desiredActive = null } = {}) {
   const [error, setError] = useState('');
   const [streamSrc, setStreamSrc] = useState('');
   const [imgKey, setImgKey] = useState(0);
+  const [autoSync, setAutoSync] = useState(true);
 
   const stopStream = useCallback(() => {
     setStreamSrc('');
@@ -39,17 +40,26 @@ export function CameraPreview({ desiredActive = null } = {}) {
 
   useEffect(() => {
     if (desiredActive === null) return;
+    if (!autoSync) return;
     if (desiredActive && !active && !loading) {
       startStream();
     } else if (!desiredActive && active) {
       stopStream();
     }
-  }, [desiredActive, active, loading, startStream, stopStream]);
+  }, [desiredActive, active, loading, startStream, stopStream, autoSync]);
+
+  useEffect(() => {
+    if (!desiredActive && !active) {
+      setAutoSync(true);
+    }
+  }, [desiredActive, active]);
 
   const handleToggle = () => {
     if (active) {
+      setAutoSync(false);
       stopStream();
     } else {
+      setAutoSync(true);
       startStream();
     }
   };
@@ -82,7 +92,7 @@ export function CameraPreview({ desiredActive = null } = {}) {
         </button>
       </div>
 
-      <div className="relative rounded-3xl overflow-hidden bg-[#0B1728]/60 border border-white/20 min-h-[220px]">
+      <div className="relative rounded-3xl overflow-hidden bg-[#0B1728]/60 border border-white/20 min-h-[180px] aspect-[4/3]">
         {!active && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white/80 px-6">
             <Camera size={36} className="mb-4 opacity-70" />

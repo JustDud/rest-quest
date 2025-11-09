@@ -312,6 +312,7 @@ def run_conversation(
     turns: int = 2,
     *,
     transcript_path: Path = SESSION_TRANSCRIPT,
+    stop_event: Optional["threading.Event"] = None,
 ) -> Path:
     """
     Run multiple conversation turns and save a consolidated transcript.
@@ -322,6 +323,9 @@ def run_conversation(
     ensure_intro_prompt(history)
 
     for turn_index, stage in enumerate(stage_sequence, start=1):
+        if stop_event and stop_event.is_set():
+            print("Conversation stop requested. Exiting loop.")
+            break
         print(f"\n--- Turn {turn_index}/{len(stage_sequence)} ({stage}) ---")
         user_text, assistant_text = capture_and_forward(
             transcribe=True,
