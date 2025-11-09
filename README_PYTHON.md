@@ -83,4 +83,4 @@ rest-quest/
   - The Emotional Check-In button calls `POST /camera/capture` to stream a short clip into the analysis.
   - The on-page live preview pulls from `GET /camera/stream` (override via `VITE_CAMERA_STREAM_ENDPOINT`) so the annotated OpenCV frames appear inside the app.
   - Logs land in `project/camera.log`. Set `CAMERA_PYTHON` if you need a specific interpreter for OpenCV/TF.
-- **Full session runner**: `POST /session/start` (front-end default) spins up the entire `project/main.py` workflow; `GET /session/status` reports progress plus the latest answers. Adjust the endpoint with `VITE_SESSION_ENDPOINT` if needed.
+- **Full session runner**: `POST /session/start` (front-end default) spins up the entire `project/main.py` workflow; `GET /session/status` reports progress plus the latest answers. Adjust the endpoint with `VITE_SESSION_ENDPOINT` if needed. Browser mic recordings stream to `POST /session/audio`, so keep the API server running locally with access to your camera/mic hardware.

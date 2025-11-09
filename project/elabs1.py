@@ -56,14 +56,18 @@ def _ensure_audio_dependencies() -> None:
 
 def record_audio(
     *,
-    duration_seconds: float = 6.0,
+    duration_seconds: Optional[float] = 6.0,
     sample_rate: int = LISTEN_SAMPLE_RATE,
     channels: int = LISTEN_CHANNELS,
     countdown: bool = True,
+    data: Optional[bytes] = None,
 ) -> bytes:
     """
     Record audio from the system microphone and return WAV bytes.
     """
+    if data is not None:
+        return data
+
     _ensure_audio_dependencies()
 
     if countdown:
@@ -72,7 +76,7 @@ def record_audio(
             time.sleep(1)
         print("Listening now - speak clearly!", flush=True)
 
-    frames = int(duration_seconds * sample_rate)
+    frames = int(duration_seconds * sample_rate) if duration_seconds else sample_rate * 6
     recording = sd.rec(frames, samplerate=sample_rate, channels=channels, dtype="int16")
     sd.wait()
 
@@ -92,10 +96,23 @@ def transcribe_audio(
     model_id: str = DEFAULT_STT_MODEL,
     language_code: Optional[str] = "en",
     diarize: bool = False,
+    stream: bool = False,
 ) -> str:
     """
     Send recorded audio to ElevenLabs STT and return the transcript text.
     """
+    if stream:
+        response = elevenlabs.speech_to_text.stream(
+            model_id=model_id,
+            language_code=language_code,
+            diarize=diarize,
+            audio=audio_bytes,
+        )
+        chunks = []
+        for chunk in response:
+            if isinstance(chunk, SpeechToTextChunkResponseModel):
+                chunks.append(chunk.text.strip())
+        return " ".join(chunks).strip()
     response = elevenlabs.speech_to_text.convert(
         model_id=model_id,
         language_code=language_code,
@@ -152,7 +169,7 @@ def send_text_to_elevenlabs(
     output_format: TextToSpeechStreamRequestOutputFormat = DEFAULT_STREAM_FORMAT,
     playback: bool = True,
     save_to: Optional[Path | str] = None,
-) -> Optional[Path]:
+) -> bytes:
     """
     Convert text into speech via ElevenLabs TTS. Streams audio by default and optionally saves it.
     """
@@ -171,8 +188,7 @@ def send_text_to_elevenlabs(
     if save_to:
         destination = Path(save_to)
         destination.write_bytes(audio_bytes)
-        return destination
-    return None
+    return audio_bytes
 
 
 def capture_and_forward(

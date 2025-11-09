@@ -4,15 +4,18 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Tuple, Optional, Callable
 
-from camera import EmotionVisualizer, cv2, DeepFace, FER, format_spectrum
-from elabs1 import log_conversation
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.append(str(BASE_DIR))
+
+from camera import cv2, DeepFace, FER, format_spectrum
+from session_service import SessionService, _default_hook
 from gemini_client1 import get_trip_response
 from session_config import LISTEN_SECONDS, QUESTIONS, UI_WINDOW_NAME, WARMUP_SECONDS
-
-from actions.question import run_question
-from actions.utils import speak_with_visualizer
 
 ANSWERS_LOG = Path("project/latest_answers.json")
 
@@ -28,15 +31,6 @@ def _ensure_dependencies() -> None:
             "Missing required dependencies: " + ", ".join(missing) + ". "
             "Install the packages or run in mock mode."
         )
-
-
-def _speak_line(text: str, *, visualizer: EmotionVisualizer) -> None:
-    speak_with_visualizer(text, visualizer, window_name=UI_WINDOW_NAME)
-
-
-def _record_assistant_line(text: str, history: List[Tuple[str, str]]) -> None:
-    log_conversation("assistant", text)
-    history.append(("assistant", text))
 
 
 def _generate_followup_question(history: List[Tuple[str, str]]) -> str:
@@ -72,69 +66,62 @@ def _print_analytics(results: List[dict]) -> None:
         print(f"  Emotions: {format_spectrum(spectrum)} (dominant: {dominant})")
 
 
-def _save_transcripts(results: List[dict], *, destination: Path = ANSWERS_LOG) -> Path:
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    payload = []
-    for idx, entry in enumerate(results, start=1):
-        payload.append(
-            {
-                "question": entry.get("question", f"Q{idx}"),
-                "transcript": entry.get("transcript") or "[no transcript]",
-                "dominant_emotion": entry.get("dominant", "neutral"),
-            }
-        )
-    destination.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    return destination
-
-
-def run_session() -> None:
+def run_session(*, on_event=None, audio_fetcher: Optional[Callable[[float], Optional[bytes]]] = None) -> dict:
     """Run the full questionnaire workflow using the live camera feed."""
     _ensure_dependencies()
 
-    visualizer = EmotionVisualizer()
-    session_results: List[dict] = []
-    history: List[Tuple[str, str]] = []
-    try:
+    handler = on_event if callable(on_event) else _default_hook
+
+    with SessionService(on_event=handler) as service:
+        session_results: List[dict] = []
+        history = service.history
         if not QUESTIONS:
             raise RuntimeError("At least one question prompt is required.")
 
         first_question = QUESTIONS[0]
-        _record_assistant_line(first_question, history)
-        _speak_line(first_question, visualizer=visualizer)
+        service.record_assistant_line(first_question)
+        service.speak_line(first_question)
 
-        entry = run_question(
+        audio_bytes = None
+        if audio_fetcher:
+            service.emit("record_prompt", question=first_question, index=1)
+            audio_bytes = audio_fetcher(LISTEN_SECONDS + WARMUP_SECONDS + 2.0)
+            if audio_bytes is None:
+                service.emit("record_timeout", index=1)
+
+        entry = service.ask_question(
             first_question,
             listen_seconds=LISTEN_SECONDS,
             warmup_seconds=WARMUP_SECONDS,
-            visualizer=visualizer,
-            window_name=UI_WINDOW_NAME,
             question_index=1,
-            history=history,
+            audio_bytes=audio_bytes,
         )
         session_results.append(entry)
 
         follow_up_question = _generate_followup_question(history)
-        _record_assistant_line(follow_up_question, history)
-        _speak_line(follow_up_question, visualizer=visualizer)
+        service.record_assistant_line(follow_up_question)
+        service.speak_line(follow_up_question)
+        audio_bytes = None
+        if audio_fetcher:
+            service.emit("record_prompt", question=follow_up_question, index=2)
+            audio_bytes = audio_fetcher(LISTEN_SECONDS + WARMUP_SECONDS + 2.0)
+            if audio_bytes is None:
+                service.emit("record_timeout", index=2)
 
-        entry = run_question(
+        entry = service.ask_question(
             follow_up_question,
             listen_seconds=LISTEN_SECONDS,
             warmup_seconds=WARMUP_SECONDS,
-            visualizer=visualizer,
-            window_name=UI_WINDOW_NAME,
             question_index=2,
-            history=history,
+            audio_bytes=audio_bytes,
         )
         session_results.append(entry)
 
         closing = "Thanks for your responses"
-        _record_assistant_line(closing, history)
-        _speak_line(closing, visualizer=visualizer)
+        service.record_assistant_line(closing)
+        service.speak_line(closing)
 
         _print_analytics(session_results)
-        saved_path = _save_transcripts(session_results)
+        saved_path = service.save_results(destination=ANSWERS_LOG)
         print(f"Saved transcribed answers to {saved_path}")
-
-    finally:
-        visualizer.release()
+        return {"results": session_results, "answers_path": str(saved_path)}

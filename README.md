@@ -58,7 +58,8 @@ The React experience now talks to the Python analysis pipeline (Gemini + fallbac
 4. (Optional) Point the frontend elsewhere with `VITE_ANALYSIS_ENDPOINT`; it defaults to `http://localhost:8000/analysis`. Override the capture endpoint with `VITE_CAMERA_CAPTURE_ENDPOINT` if you proxy it differently.
 5. During the Emotional Check-In, the UI calls `/camera/capture` which briefly opens the webcam, aggregates emotions, and feeds them into the analysis request. Override the Python binary with `CAMERA_PYTHON=/path/to/python` if needed.
 6. The live preview’s “Open camera” button streams `/camera/stream` (override via `VITE_CAMERA_STREAM_ENDPOINT`) so you can see the same annotated feed the backend uses.
-7. Clicking “Listen” also triggers `/session/start` (override via `VITE_SESSION_ENDPOINT`) which launches the full `project/main.py` workflow in the background; poll `/session/status` to inspect progress.
+7. Clicking “Listen” also triggers `/session/start` (override via `VITE_SESSION_ENDPOINT`) which launches the full `project/main.py` workflow in the background; poll `/session/status` and subscribe to `/session/events` for live updates (events include `audio` URLs served from `/audio/prompts/{file}` so the SPA can play ElevenLabs prompts).
+8. The guided experience auto-records microphone input in the browser (grant permission when prompted). The UI streams audio chunks to `/session/audio`, so Gemini analyzes your spoken answers in real-time—keep the tab focused while speaking.
 
 When the API is unreachable, the UI automatically falls back to the in-browser heuristic analysis so flows remain demoable offline.
 

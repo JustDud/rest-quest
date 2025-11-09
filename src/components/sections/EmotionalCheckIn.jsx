@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, CheckCircle2, Headphones } from 'lucide-react';
+import React, { useContext, useMemo, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Mic, Headphones, Sparkles } from 'lucide-react';
 import { EmotionalContext } from '../../contexts/EmotionalContext';
 import { GlassCard } from '../ui/GlassCard';
 import { ParticleField } from '../ui/ParticleField';
@@ -9,6 +9,8 @@ import { useTypedText } from '../../hooks/useTypedText';
 import { RadialProgress } from '../ui/RadialProgress';
 import { AmbientSoundscape } from '../sound/AmbientSoundscape';
 import { CameraPreview } from '../ui/CameraPreview';
+import { ConversationLog } from '../ui/ConversationLog';
+import { LiveEmotionVisual } from '../ui/LiveEmotionVisual';
 
 const indicators = [
   { key: 'stress', label: 'Stress', color: '#F06595' },
@@ -17,37 +19,29 @@ const indicators = [
 ];
 
 export function EmotionalCheckIn() {
-  const { entry, setEntry, analyzing, analyzeEntry, analysis } = useContext(EmotionalContext);
-  const [response, setResponse] = useState('');
+  const {
+    entry,
+    setEntry,
+    analyzing,
+    analyzeEntry,
+    analysis,
+    sessionEvents,
+    startGuidedSession,
+    sessionStarting,
+    micRecorder,
+    liveEmotion,
+  } = useContext(EmotionalContext);
   const [inputError, setInputError] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [messages, setMessages] = useState(() => [
-    {
-      id: 'welcome',
-      sender: 'ai',
-      text: 'I’m here and listening. Tell me how your mind and body feel right now.',
-    },
-  ]);
-  const typedResponse = useTypedText(response, 28);
+  const typedHeadline = useTypedText(
+    'Choose the path that feels most natural—real-time guided conversation or reflective text entry.',
+    26
+  );
 
   const orbColor = useMemo(() => {
     if (!analysis) return 'from-[#3BC9DB] to-[#B197FC]';
     if (analysis.stress > 80) return 'from-[#F06595] to-[#F783AC]';
     if (analysis.stress > 55) return 'from-[#F59F00] to-[#FFD43B]';
     return 'from-[#51CF66] to-[#3BC9DB]';
-  }, [analysis]);
-
-  useEffect(() => {
-    if (!analysis) return undefined;
-    const summary = `I'm hearing ${analysis.dominantEmotion} cues. Stress ${analysis.stress}/100, energy ${analysis.energy}/100. Let me guide you toward ${analysis.recommendations[0]}.`;
-    setResponse(summary);
-    setMessages((prev) => [
-      ...prev.filter((msg) => !msg.pending),
-      { id: `ai-${Date.now()}`, sender: 'ai', text: summary },
-    ]);
-    setSuccess(true);
-    const timer = setTimeout(() => setSuccess(false), 2400);
-    return () => clearTimeout(timer);
   }, [analysis]);
 
   const handleAnalyze = () => {
@@ -57,19 +51,11 @@ export function EmotionalCheckIn() {
       return;
     }
     const userText = entry.trim();
-    setMessages((prev) => [
-      ...prev,
-      { id: `user-${Date.now()}`, sender: 'you', text: userText },
-      {
-        id: 'pending',
-        sender: 'ai',
-        text: 'Listening closely to your tone, pauses, and words...',
-        pending: true,
-      },
-    ]);
     analyzeEntry(userText);
     setEntry('');
   };
+
+  const latestEvents = sessionEvents.slice(-3).reverse();
 
   return (
     <section
@@ -82,15 +68,16 @@ export function EmotionalCheckIn() {
         speed={analysis ? Math.max(0.8, analysis.stress / 60) : 1}
         className="opacity-30"
       />
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.2fr,0.8fr] gap-10 items-start">
+      <div className="max-w-6xl mx-auto grid lg:grid-cols-[1.1fr,0.9fr] gap-10 items-start">
         <div className="space-y-6" data-cinematic-content="1">
           <GlassCard className="p-8 space-y-6">
             <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.5em] text-[#1971C2]">Emotional check-in</p>
-                <h2 className="mt-2 text-3xl font-['Plus_Jakarta_Sans'] text-[#0B1728]">
-                  Say how you feel, we’ll translate it into care.
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.5em] text-[#1971C2]">Guided experience</p>
+                <h2 className="text-3xl font-['Plus_Jakarta_Sans'] text-[#0B1728]">
+                  Let Serenity lead the conversation
                 </h2>
+                <p className="text-[#0B1728]/70">{typedHeadline}</p>
               </div>
               <div className="relative w-24 h-24">
                 <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${orbColor} animate-pulse`} />
@@ -105,25 +92,33 @@ export function EmotionalCheckIn() {
               </div>
             </div>
 
-            <div className="space-y-4 max-h-[360px] overflow-y-auto no-scrollbar">
-              {messages.map((message) => (
-                <motion.div
-                  key={message.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${message.sender === 'you' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`px-4 py-3 rounded-3xl max-w-[80%] text-sm leading-relaxed ${
-                      message.sender === 'you'
-                        ? 'bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] text-white shadow-lg'
-                        : 'bg-white/85 text-[#0B1728]'
-                    }`}
-                  >
-                    {message.text}
-                  </div>
-                </motion.div>
-              ))}
+            <div className="space-y-4">
+              <p className="text-sm text-[#0B1728]/70">
+                Press start to hear voiced prompts, watch the live analysis mesh, and let the AI record your responses.
+              </p>
+              <button
+                type="button"
+                onClick={startGuidedSession}
+                disabled={sessionStarting}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] px-6 py-3 text-white font-semibold serenity-interactive disabled:opacity-70"
+              >
+                <Sparkles size={16} />
+                {sessionStarting ? 'Starting session…' : 'Start guided conversation'}
+              </button>
+            <div className="space-y-2 text-sm text-[#0B1728]/70">
+              <p className="uppercase tracking-[0.4em] text-xs text-[#1971C2]/70">Live status</p>
+              <ConversationLog events={sessionEvents.slice(-50).reverse()} />
+              <LiveEmotionVisual emotion={liveEmotion || analysis} />
+              <div className="flex items-center gap-2 text-xs text-[#0B1728]/70">
+                <span
+                  className={`inline-flex h-2.5 w-2.5 rounded-full ${
+                    micRecorder?.recording ? 'bg-[#F06595] animate-pulse' : 'bg-[#1971C2]'
+                  }`}
+                />
+                {micRecorder?.recording ? 'Listening to your voice…' : 'Waiting for next prompt'}
+                {micRecorder?.error && <span className="text-[#F06595] ml-2">{micRecorder.error}</span>}
+              </div>
+            </div>
             </div>
           </GlassCard>
 
@@ -133,52 +128,37 @@ export function EmotionalCheckIn() {
         </div>
 
         <div className="space-y-6" data-cinematic-content="1">
-          <div className="flex flex-col lg:flex-row gap-6">
-            <GlassCard className="p-6 space-y-6 flex-1">
-              <div className="flex items-center justify-between">
-                <label className="text-sm uppercase tracking-[0.4em] text-[#1971C2]/80">
-                  voice + text
-                </label>
-                <div className="flex items-center gap-2 text-xs text-[#0B1728]/60">
-                  <Headphones size={14} />
-                  Best with headphones
-                </div>
+          <GlassCard className="p-6 space-y-6">
+            <div className="flex items-center justify-between">
+              <label className="text-sm uppercase tracking-[0.4em] text-[#1971C2]/80">
+                text check-in
+              </label>
+              <div className="flex items-center gap-2 text-xs text-[#0B1728]/60">
+                <Headphones size={14} />
+                Optional ambient soundscape
               </div>
+            </div>
 
-              <textarea
-                value={entry}
-                onChange={(e) => setEntry(e.target.value)}
-                placeholder="“Work has felt like a tidal wave lately...”"
-                className={`serenity-input w-full h-36 rounded-[28px] border border-transparent bg-white/70 px-6 py-4 text-lg text-[#0B1728] focus:bg-white transition-all ${
-                  inputError ? 'serenity-input-error' : ''
-                } ${entry ? 'typing' : ''}`}
-              />
-              <div className="flex items-center justify-between flex-wrap gap-3">
-                <button
-                  onClick={handleAnalyze}
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] text-white px-5 py-2 serenity-interactive"
-                >
-                  <Mic size={16} />
-                  Listen
-                </button>
-                <AnimatePresence>
-                  {success && (
-                    <motion.span
-                      initial={{ opacity: 0, x: 6 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 6 }}
-                      className="inline-flex items-center gap-1 text-sm text-[#51CF66]"
-                    >
-                      <CheckCircle2 size={16} />
-                      Saved
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-              </div>
-              <AmbientSoundscape analysis={analysis} />
-            </GlassCard>
-
-          </div>
+            <textarea
+              value={entry}
+              onChange={(e) => setEntry(e.target.value)}
+              placeholder="“Work has felt like a tidal wave lately...”"
+              className={`serenity-input w-full h-36 rounded-[28px] border border-transparent bg-white/70 px-6 py-4 text-lg text-[#0B1728] focus:bg-white transition-all ${
+                inputError ? 'serenity-input-error' : ''
+              } ${entry ? 'typing' : ''}`}
+            />
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <button
+                onClick={handleAnalyze}
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#1971C2] to-[#3BC9DB] text-white px-5 py-2 serenity-interactive disabled:opacity-60"
+                disabled={analyzing}
+              >
+                <Mic size={16} />
+                {analyzing ? 'Analyzing…' : 'Send reflection'}
+              </button>
+            </div>
+            <AmbientSoundscape analysis={analysis} />
+          </GlassCard>
 
           <GlassCard className="p-6 space-y-6">
             <div className="grid sm:grid-cols-3 gap-4">

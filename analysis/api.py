@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -8,10 +9,11 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import IO, Any, Dict, List, Optional
+from queue import Empty
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from pydantic import BaseModel, Field
 
 try:  # pragma: no cover - optional relative import support
@@ -39,6 +41,7 @@ BASE_DIR = Path(__file__).resolve().parents[1]
 PROJECT_DIR = BASE_DIR / "project"
 CAMERA_SCRIPT = PROJECT_DIR / "camera.py"
 CAMERA_LOG = PROJECT_DIR / "camera.log"
+AUDIO_CACHE_DIR = PROJECT_DIR / "audio_cache"
 
 if str(BASE_DIR) not in sys.path:
     sys.path.append(str(BASE_DIR))
@@ -57,10 +60,18 @@ except Exception:  # noqa: BLE001
     camera_cv2 = None  # type: ignore[assignment]
 
 try:  # pragma: no cover
-    from project.session_runner import get_session_status, start_session
+    from project.session_runner import (
+        get_session_status,
+        start_session,
+        subscribe_events,
+        unsubscribe_events,
+        submit_audio_chunk,
+    )
 except Exception:  # noqa: BLE001
     get_session_status = None  # type: ignore[assignment]
     start_session = None  # type: ignore[assignment]
+    subscribe_events = None  # type: ignore[assignment]
+    unsubscribe_events = None  # type: ignore[assignment]
 
 _camera_process: Optional[subprocess.Popen] = None
 _camera_log_handle: Optional[IO[bytes]] = None
@@ -345,6 +356,47 @@ async def session_status() -> Dict[str, Any]:
     if not get_session_status:
         raise HTTPException(status_code=503, detail="Session runner unavailable on this host.")
     return get_session_status()
+
+
+@app.get("/session/events")
+async def session_events() -> StreamingResponse:
+    if not subscribe_events or not unsubscribe_events:
+        raise HTTPException(status_code=503, detail="Session runner unavailable on this host.")
+
+    subscriber = subscribe_events()
+
+    def _event_generator():
+        try:
+            while True:
+                try:
+                    event = subscriber.get(timeout=1.0)
+                    payload = f"data: {json.dumps(event)}\n\n"
+                    yield payload.encode("utf-8")
+                except Empty:
+                    yield b": keep-alive\n\n"
+        finally:
+            unsubscribe_events(subscriber)
+
+    return StreamingResponse(_event_generator(), media_type="text/event-stream")
+
+
+@app.post("/session/audio")
+async def session_audio(file: UploadFile = File(...)) -> Dict[str, Any]:
+    if not submit_audio_chunk:
+        raise HTTPException(status_code=503, detail="Session audio handler unavailable on this host.")
+    data = await file.read()
+    if not data:
+        raise HTTPException(status_code=400, detail="Empty audio payload.")
+    submit_audio_chunk(data)
+    return {"status": "queued"}
+
+
+@app.get("/audio/prompts/{filename}")
+async def get_prompt_audio(filename: str):
+    path = AUDIO_CACHE_DIR / filename
+    if not path.exists():
+        raise HTTPException(status_code=404, detail="Audio file not found.")
+    return FileResponse(path, media_type="audio/mpeg", filename=filename)
 
 
 @app.on_event("shutdown")

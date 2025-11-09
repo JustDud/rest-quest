@@ -119,7 +119,7 @@ export function SpiritBird({ position, state, message, tilt = 0, trail = [], cur
             </motion.g>
 
             <motion.g
-              transformOrigin="50 55"
+              transformorigin="50 55"
               animate={{ rotate: [-flap, flap, -flap] }}
               transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
             >
@@ -131,7 +131,7 @@ export function SpiritBird({ position, state, message, tilt = 0, trail = [], cur
             </motion.g>
 
             <motion.g
-              transformOrigin="70 55"
+              transformorigin="70 55"
               animate={{ rotate: [flap, -flap, flap] }}
               transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
             >

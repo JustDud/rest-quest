@@ -1,5 +1,6 @@
-import React, { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { mockEmotionAnalysis } from '../utils/emotionAnalysis';
+import { useMicrophoneRecorder } from '../hooks/useMicrophoneRecorder';
 
 const DEFAULT_ANALYSIS_ENDPOINT = 'http://localhost:8000/analysis';
 const ANALYSIS_ENDPOINT = import.meta.env.VITE_ANALYSIS_ENDPOINT || DEFAULT_ANALYSIS_ENDPOINT;
@@ -17,6 +18,9 @@ const CAMERA_CAPTURE_ENDPOINT =
 
 const SESSION_START_ENDPOINT =
   import.meta.env.VITE_SESSION_ENDPOINT || `${ANALYSIS_ORIGIN}/session/start`;
+const SESSION_EVENTS_ENDPOINT =
+  import.meta.env.VITE_SESSION_EVENTS_ENDPOINT || `${ANALYSIS_ORIGIN}/session/events`;
+const AUDIO_BASE_URL = ANALYSIS_ORIGIN;
 
 export const EmotionalContext = createContext(null);
 
@@ -25,12 +29,72 @@ export function EmotionalProvider({ children }) {
   const [analysis, setAnalysis] = useState(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [particleSpeed, setParticleSpeed] = useState(1);
+  const [sessionEvents, setSessionEvents] = useState([]);
+  const [audioQueue, setAudioQueue] = useState([]);
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  const [sessionStarting, setSessionStarting] = useState(false);
+  const audioRef = useRef(typeof Audio !== 'undefined' ? new Audio() : null);
+  const [liveEmotion, setLiveEmotion] = useState(null);
+  const micRecorder = useMicrophoneRecorder({
+    endpoint: `${ANALYSIS_ORIGIN}/session/audio`,
+  });
 
   useEffect(() => {
     if (!analysis) return;
     const capped = Math.max(0.6, Math.min(2.2, analysis.stress / 50));
     setParticleSpeed(capped);
   }, [analysis]);
+
+  useEffect(() => {
+    if (!SESSION_EVENTS_ENDPOINT) return;
+    const source = new EventSource(SESSION_EVENTS_ENDPOINT);
+    source.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        setSessionEvents((prev) => [...prev.slice(-50), data]);
+        if (data?.type === 'spoken_line' && data?.payload?.audio) {
+          setAudioQueue((queue) => [...queue, data.payload.audio]);
+        }
+        if (data?.type === 'question_complete' && data?.payload?.entry?.spectrum) {
+          setLiveEmotion({
+            spectrum: data.payload.entry.spectrum,
+            dominant: data.payload.entry.dominant,
+            timestamp: data.timestamp,
+          });
+        }
+      } catch (error) {
+        console.warn('Failed to parse session event', error);
+      }
+    };
+    source.onerror = (error) => {
+      console.warn('Session event stream error', error);
+    };
+    return () => {
+      source.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    const audioEl = audioRef.current;
+    if (!audioEl) return;
+    if (audioPlaying) return;
+    if (!audioQueue.length) return;
+
+    const [next, ...rest] = audioQueue;
+    setAudioQueue(rest);
+    setAudioPlaying(true);
+    audioEl.src = `${AUDIO_BASE_URL}${next}`;
+    audioEl.play().catch((error) => {
+      console.warn('Audio playback failed', error);
+      setAudioPlaying(false);
+    });
+
+    const handleEnded = () => setAudioPlaying(false);
+    audioEl.addEventListener('ended', handleEnded, { once: true });
+    return () => {
+      audioEl.removeEventListener('ended', handleEnded);
+    };
+  }, [audioQueue, audioPlaying]);
 
   const captureCameraEmotion = useCallback(async () => {
     try {
@@ -57,7 +121,9 @@ export function EmotionalProvider({ children }) {
     return null;
   }, []);
 
-  const startFullSession = useCallback(async () => {
+  const startGuidedSession = useCallback(async () => {
+    if (sessionStarting) return;
+    setSessionStarting(true);
     try {
       const response = await fetch(SESSION_START_ENDPOINT, { method: 'POST' });
       if (!response.ok && response.status !== 409) {
@@ -65,8 +131,10 @@ export function EmotionalProvider({ children }) {
       }
     } catch (error) {
       console.warn('Full-session runner unavailable', error);
+    } finally {
+      setSessionStarting(false);
     }
-  }, []);
+  }, [sessionStarting]);
 
   const analyzeEntry = useCallback(async (text) => {
     if (!text.trim()) return;
@@ -74,7 +142,6 @@ export function EmotionalProvider({ children }) {
     const fallback = () => mockEmotionAnalysis(text);
 
     try {
-      startFullSession();
       const cameraCapture = await captureCameraEmotion();
       const visualFrames = [];
       if (cameraCapture?.spectrum) {
@@ -117,7 +184,27 @@ export function EmotionalProvider({ children }) {
     } finally {
       setAnalyzing(false);
     }
-  }, [captureCameraEmotion, startFullSession]);
+  }, [captureCameraEmotion]);
+
+  useEffect(() => {
+    if (!sessionEvents.length || !micRecorder) return;
+    const latest = sessionEvents[sessionEvents.length - 1];
+    if (latest.type === 'record_prompt') {
+      if (!micRecorder.recording) {
+        micRecorder.startRecording?.();
+      }
+    } else if (latest.type === 'record_timeout' || latest.type === 'question_complete') {
+      if (micRecorder.recording) {
+        micRecorder.stopRecording?.();
+      }
+    }
+  }, [sessionEvents, micRecorder]);
+
+  useEffect(() => {
+    if (micRecorder?.error) {
+      console.warn(micRecorder.error);
+    }
+  }, [micRecorder?.error]);
 
   const value = useMemo(
     () => ({
@@ -127,8 +214,24 @@ export function EmotionalProvider({ children }) {
       analyzing,
       analyzeEntry,
       particleSpeed,
+      sessionEvents,
+      startGuidedSession,
+      sessionStarting,
+      micRecorder,
+      liveEmotion,
     }),
-    [entry, analysis, analyzing, analyzeEntry, particleSpeed]
+    [
+      entry,
+      analysis,
+      analyzing,
+      analyzeEntry,
+      particleSpeed,
+      sessionEvents,
+      startGuidedSession,
+      sessionStarting,
+      micRecorder,
+      liveEmotion,
+    ]
   );
 
   return <EmotionalContext.Provider value={value}>{children}</EmotionalContext.Provider>;
